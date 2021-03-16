@@ -1,0 +1,16 @@
+Package: m61r
+Type: Package
+Version: 0.0.1
+Authors@R: c(person("p71v","u98h1", , "pv71u98h1@gmail.com", c("aut","cre")))
+Author: pv71u98h1 [aut, cre],
+Maintainer: pv71u98h1 <pv71u98h1@gmail.com>
+Title: m61r
+Description: Data manipulation in one package and in base r.
+  Informative. Minimal. No dependencies.
+  dplyr and tidyr-like in one place.
+  Nothing else than base r to build the package.
+Depends:
+    R (>= 3.4.4)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: false
