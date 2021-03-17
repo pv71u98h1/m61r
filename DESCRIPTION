@@ -1,9 +1,7 @@
 Package: m61r
 Type: Package
 Version: 0.0.1
-Authors@R: c(person("p71v","u98h1", , "pv71u98h1@gmail.com", c("aut","cre")))
-Author: pv71u98h1 [aut, cre],
-Maintainer: pv71u98h1 <pv71u98h1@gmail.com>
+Authors@R: c(person("pv71","u98h1", , "pv71u98h1@gmail.com", c("aut","cre")))
 Title: m61r
 Description: Data manipulation in one package and in base r.
   Informative. Minimal. No dependencies.
