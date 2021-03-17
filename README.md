@@ -45,21 +45,6 @@ co2$summarise(foo=~mean(uptake),bar=~sd(uptake))
 co2 # get results
 
 head(co2) # back to normal
-```
-
-## Usage
-
-```R
-library(m61r)
-
-co2 <- m61r(CO2)
-co2$filter(~Plant %in% c("Qn1","Qc3"))
-co2$mutate(z1=~uptake/conc,y=~conc/100)
-co2$group_by(~c(Type,Treatment))
-co2$summarise(foo=~mean(uptake),bar=~sd(uptake))
-co2 # get results
-
-head(co2) # back to normal
 
 
 ```
