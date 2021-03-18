@@ -45,7 +45,7 @@ head(co2) # back to normal
 \label{sec:ex-2}
 
 <<edit2>>=
-<<edit1>>
+co2 <- m61r(CO2)
 co2$filter(~Plant %in% c("Qn1","Qc3"))
 co2$transmutate(z1=~uptake/conc,y=~conc/100)
 tmp <- co2[] # get only the data.frame and not the whole m61r object

@@ -1,5 +1,5 @@
 
-`[.m61r` <- function(x,i,j){
+`[.m61r` <- function(x,i,j,...){
   if (missing(i) & missing(j)){
      get("values",x)()
   } else if (missing(i) & !missing(j)){
