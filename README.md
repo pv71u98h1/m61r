@@ -16,6 +16,9 @@ setwd("~")
 download.file("https://github.com/pv71u98h1/m61r/archive/0.0.1.zip",destfile="m61r-0.0.1.zip")
 unzip("m61r-0.0.1.zip")
 
+# install
+install.packages(file.path("~","m61r-0.0.1"), repos=NULL, type='source')
+
 # build vignettes
 vign <- list.files(file.path("~","m61r-0.0.1","vignettes"))
 dir.create(file.path("~","m61r-0.0.1","inst","doc"),recursive=TRUE)
@@ -24,7 +27,7 @@ lapply(vign,function(x){
                  dir    = file.path("~","m61r-0.0.1","inst","doc"))
 })
 
-# install
+# install the vignettes
 install.packages(file.path("~","m61r-0.0.1"), repos=NULL, type='source')
 
 # clean
