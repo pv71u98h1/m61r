@@ -1,10 +1,10 @@
 # m61r
 
-Informative. Minimal. No dependencies.
+Minimal. No dependencies.
 
 Data manipulation in one package and in base r.
 
-dplyr and tidyr-like in one place.
+'dplyr' and 'tidyr'-like in one place.
 
 Nothing else than base r to build the package.
 
