@@ -13,10 +13,19 @@ group_by_(df, group = NULL)
 
 \item{group}{formula that describes the group}
 }
-\details{
-  The output of this function is a list.
+\value{
+The function returns a list.
+Each element of the list is a subset of data frame \code{df}. Subset is determined by variables given in \code{group}.
+Each data frame get the following properties:
+\itemize{
+\item Columns are not modified.
+\item Only rows corresponding to the subset.
+\item Data frame attributes are preserved.
+}
 }
 \examples{
-group_by_(CO2,~c(Type,Treatment))
+tmp <- group_by_(CO2,~c(Type,Treatment))
+
+tmp[[1]]
 }
 \keyword{m61r}

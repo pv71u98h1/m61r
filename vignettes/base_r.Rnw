@@ -21,8 +21,6 @@ All the functions only work with data.frames.
 
 <<echo=FALSE, results=hide>>=
 library(m61r)
-ps.options(pointsize = 12)
-options(width = 60)
 @
 
 \section{filter}

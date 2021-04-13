@@ -1,15 +1,66 @@
 \name{m61r}
 \alias{m61r}
+\alias{[.m61r}
+\alias{[<-.m61r}
+\alias{print.m61r}
+\alias{names.m61r}
+\alias{dim.m61r}
+\alias{as.data.frame.m61r}
 \encoding{UTF-8}
-\title{m61r}
+\title{Create m61r object}
 \description{
-m61r is an object that enables to run a sequence of operation on a data.frame.
+Create a m61r object that enables to run a sequence of operations on a data.frame.
 }
 \usage{
 m61r(df = NULL)
+
+\method{[}{m61r}(x, i, j, ...)
+
+\method{[}{m61r}(x, i, j) <- value
+
+\method{print}{m61r}(x, ...)
+
+\method{names}{m61r}(x, ...)
+
+\method{dim}{m61r}(x, ...)
+
+\method{as.data.frame}{m61r}(x, ...)
+
 }
 \arguments{
 \item{df}{data.frame}
+
+\item{x}{object of class \code{m61r}}
+
+\item{i}{row}
+
+\item{j}{column}
+
+\item{...}{further arguments passed to or from other methods}
+
+\item{value}{value to be assigned}
+
+}
+\value{
+The function \code{m61r} returns an object of type \code{m61r}.
+
+Argument \code{df} get stored internally to the object \code{m61r}.
+One manipulates the internal \code{data.frame} by using internal functions similar to the ones implemented in package \code{m61r} for \code{data.frames} as \code{arrange}, \code{desange}, \code{filter}, \code{join} and its relatives, \code{mutate} and \code{transmutate}, \code{gather} and \code{spread}, \code{select}, \code{groupe_by}, \code{summarise}, \code{values} and \code{modify}.
+The result of the last action is stored internally to the object \code{m61r} until the internal function \code{values} get called.
+It is thus possible to create a readable sequence of actions on a \code{data.frame}.
+
+In addition,
+\itemize{
+\item \code{[.m61r} returns a subset of the internal \code{data.frame} embedded to the object \code{m61r}.
+\item \code{[<-.m61r} assigns \code{value} to the internal \code{data.frame} embedded to the object \code{m61r}.
+\item \code{print.m61r} prints the internal \code{data.frame} embedded to the object \code{m61r}.
+\item \code{names.m61r} provides the names of the column of the internal \code{data.frame} embedded to the object \code{m61r}.
+\item \code{dim.m61r} provides the dimensions of the internal \code{data.frame} embedded to the object \code{m61r}.
+\item \code{as.data.frame.m61r} extracts the internal \code{data.frame} embedded to the object \code{m61r}.
+}
+
+Finally, it is possible to clone a \code{m61r} object into a new one by using the internal function \code{clone}.
+
 }
 \examples{
 
@@ -135,7 +186,7 @@ m61r(df = NULL)
                     dose.a2 = c(2,1,2,1),
                     dose.a14 = c(3,3,3,3))
 
-  df4 <- m61r:::gather_(df3,pivot = c("id","age"))
+  df4 <- m61r::gather_(df3,pivot = c("id","age"))
   df4 <- rbind(df4,
     data.frame(id=5, age=20,parameters="dose.a14",values=8),
     data.frame(id=6, age=10,parameters="dose.a1",values=5))
@@ -145,15 +196,13 @@ m61r(df = NULL)
   tmp
 
 
-  # simple manipulation
-  co2
-  names(co2)
-  dim(co2)
-  co2[1,]
-  co2[,2:3]
-  co2[1:10,1:3]
-  co2[1,"Plant"]
-  str(co2)
+  # equivalence
+  co2           # is not equivalent to co2[]
+  co2[]         # is equivalent to co2$values()
+  co2[1,]       # is equivalent to co2$values(1,)
+  co2[,2:3]     # is equivalent to co2$values(,2:3)
+  co2[1:10,1:3] # is equivalent to co2$values(1:10,2:3)
+  co2[1,"Plant"]# is equivalent to co2$values(1,"Plant")
 
   # modification on m61r object only stay for one step
   co2[1,"conc"] <- 100
@@ -170,8 +219,13 @@ m61r(df = NULL)
   # co2 <- co2[-1,]
   # class(co2) # data.frame
 
+  # descriptive manipulation
+  names(co2)
+  dim(co2)
+  str(co2)
+
   ## cloning
-  # This will only create a second variable that point on
+  # The following will only create a second variable that point on
   # the same object (!= cloning)
   foo <- co2
   str(co2)

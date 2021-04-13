@@ -1,12 +1,12 @@
 Package: m61r
 Type: Package
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(person("Jean-Marie","Lepioufle", , "pv71u98h1@gmail.com", c("aut","cre")))
 Title: Package About Data Manipulation in Pure Base R
-Description: Data manipulation in one package and in base r.
+Description: Data manipulation in one package and in base R.
   Minimal. No dependencies.
   'dplyr' and 'tidyr'-like in one place.
-  Nothing else than base r to build the package.
+  Nothing else than base R to build the package.
 Depends:
     R (>= 3.4.4)
 License: MIT + file LICENSE

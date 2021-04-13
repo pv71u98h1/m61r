@@ -1,9 +1,11 @@
 
 select_ <- function(df,variable=NULL){
-  if (!is.null(variable)) {
-      j = select_j(df=df,variable)
-      return(value_(df,,j))
-  } else return(value_(df))
+  if (inherits(df,"data.frame")) {
+    if (!is.null(variable)) {
+        j = select_j(df=df,variable)
+        return(value_(df,,j))
+    } else return(value_(df))
+  } else stop("argument 'df' is not of class data.frame")
 }
 
 select_j <- function(df,variable=NULL) {

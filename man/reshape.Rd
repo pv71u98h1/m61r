@@ -8,9 +8,9 @@ Reshape a data.frame.
 }
 \usage{
 gather_(df, new_col_name = "parameters", new_col_values = "values",
-  pivot = NULL)
+  pivot)
 
-spread_(df, col_name, col_values, pivot = NULL)
+spread_(df, col_name, col_values, pivot)
 
 }
 \arguments{
@@ -27,6 +27,20 @@ spread_(df, col_name, col_values, pivot = NULL)
 \item{pivot}{name of the columns used as pivot}
 
 }
+\details{
+A data frame is said 'wide' if several of its columns describe connected information of the same record.
+A data frame is said ‘long’ if two of its columns provide information about records, with one describing their name and the second their value.
+Functions \code{gather_()} and \code{spread_()} enable to reshape a data frames from a ‘wide’ format to a 'long' format, and vice-versa.
+}
+\value{
+The functions return a data frame.
+\itemize{
+\item Output from function \code{gather_()} get 'pivot' columns determined by argument \code{pivot}, and 'long' columns named according to arguments \code{new_col_name} and \code{new_col_values}.
+\item Output from function \code{spread_()} get 'pivot' columns determined by argument \code{pivot}, and 'wide' columns named according to values in column determined by argument \code{col_name}.
+For 'wide' columns, each row corresponds to values present in column determined by argument \code{col_values}.
+}
+}
+
 \examples{
 
 df3 <- data.frame(id = 1:4,

@@ -15,12 +15,17 @@ summarise_(df, group = NULL, ...)
 
 \item{...}{formulas to be generated}
 }
-
+\value{
+\code{summarise_()} returns a data frame.
+If argument \code{group} is not \code{NULL}, output get its first columns called according to the names present in argument \code{group}.
+The following columns are called according to the name of each argument present in \code{...}.
+Each row corresponds to processed expressions determined in \code{...} for each group determined in \code{group}, or over the whole data frame if \code{group} is \code{NULL}.
+}
 \examples{
 
-  summarise_(CO2,mean=~mean(uptake),sd=~sd(uptake))
+  summarise_(CO2,a=~mean(uptake),b=~sd(uptake))
 
-  summarise_(CO2, group=~c(Type,Treatment),mean=~mean(uptake),sd=~sd(uptake))
+  summarise_(CO2, group=~c(Type,Treatment),a=~mean(uptake),b=~sd(uptake))
 
 }
 \keyword{m61r}

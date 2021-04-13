@@ -1,9 +1,13 @@
 filter_ <- function(df,subset=NULL){
-  if (!is.null(missing(subset))) {
+  if (inherits(df,"data.frame")) {
+    if (!(missing(subset))) {
       i = filter_i(df=df,subset)
-      return(value_(df,i,))
-  } else return(value_(df))
-
+      res <- value_(df,i,)
+    } else {
+      res <- df
+    }
+    return(res)
+  } else stop("argument 'df' is not of class data.frame")
 }
 
 filter_i <- function(df,subset) {

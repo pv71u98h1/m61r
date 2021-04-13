@@ -13,6 +13,15 @@ filter_(df, subset = NULL)
 
 \item{subset}{formula that describes the conditions}
 }
+\value{
+The function returns an object of the same type as \code{df}.
+Properties:
+\itemize{
+\item Columns are not modified.
+\item Only rows following the condtion determined by \item{subset} appear.
+\item Data frame attributes are preserved.
+}
+}
 \examples{
 
 tmp <- filter_(CO2,~Plant=="Qn1")

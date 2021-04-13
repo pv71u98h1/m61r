@@ -13,6 +13,14 @@ select_(df, variable = NULL)
 
 \item{variable}{formula that describes the selection}
 }
+\value{
+\code{select_()} returns a data frame.
+Properties:
+\itemize{
+\item Only columns following the condtion determined by \item{variable} appear.
+\item Rows are not modified.
+}
+}
 \examples{
 
   tmp <- select_(CO2,~Type)

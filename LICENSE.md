@@ -1,7 +1,7 @@
 The MIT License (MIT)
 =====================
 
-Copyright © 2020-2021 pv71u98h1
+Copyright © 2020-2021 Jean-Marie Lepioufle
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation

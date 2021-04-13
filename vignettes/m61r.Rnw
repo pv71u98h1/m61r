@@ -24,8 +24,6 @@ The purpose of this package is informative.\newline
 
 <<echo=FALSE, results=hide>>=
 library(m61r)
-ps.options(pointsize = 12)
-options(width = 60)
 @
 
 <<edit1>>=
@@ -33,8 +31,8 @@ co2 <- m61r(CO2)
 co2$filter(~Plant %in% c("Qn1","Qc3"))
 co2$mutate(z1=~uptake/conc,y=~conc/100)
 co2$group_by(~c(Type,Treatment))
-co2$summarise(foo=~mean(uptake),bar=~sd(uptake))
-co2 # get results
+co2$summarise(foo=~mean(z1),bar=~sd(y))
+co2 # print results
 
 head(co2) # back to normal
 

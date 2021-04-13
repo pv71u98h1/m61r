@@ -14,6 +14,16 @@ desange_(df, ...)
 \item{df}{data.frame}
 \item{...}{formula used for arranging the data.frame}
 }
+\value{
+The functions return an object of the same type as \code{df}.
+The output has the following properties:
+Properties:
+\itemize{
+\item Columns are not modified.
+\item Output get rows in the order specified by \item{...}.
+\item Data frame attributes are preserved.
+}
+}
 \examples{
 
 tmp <- arrange_(CO2,~c(conc))
