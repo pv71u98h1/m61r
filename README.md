@@ -13,26 +13,26 @@ Nothing else than base r to build the package.
 ```R
 setwd("~")
 
-download.file("https://github.com/pv71u98h1/m61r/archive/0.0.1.zip",destfile="m61r-0.0.1.zip")
-unzip("m61r-0.0.1.zip")
+download.file("https://github.com/pv71u98h1/m61r/archive/0.0.2.zip",destfile="m61r-0.0.2.zip")
+unzip("m61r-0.0.2.zip")
 
 # install
-install.packages(file.path("~","m61r-0.0.1"), repos=NULL, type='source')
+install.packages(file.path("~","m61r-0.0.2"), repos=NULL, type='source')
 
 # build vignettes
-vign <- list.files(file.path("~","m61r-0.0.1","vignettes"))
-dir.create(file.path("~","m61r-0.0.1","inst","doc"),recursive=TRUE)
+vign <- list.files(file.path("~","m61r-0.0.2","vignettes"))
+dir.create(file.path("~","m61r-0.0.2","inst","doc"),recursive=TRUE)
 lapply(vign,function(x){
-   tools::buildVignette(file   = file.path("~","m61r-0.0.1","vignettes",x),
-                 dir    = file.path("~","m61r-0.0.1","inst","doc"))
+   tools::buildVignette(file   = file.path("~","m61r-0.0.2","vignettes",x),
+                 dir    = file.path("~","m61r-0.0.2","inst","doc"))
 })
 
 # install the vignettes
-install.packages(file.path("~","m61r-0.0.1"), repos=NULL, type='source')
+install.packages(file.path("~","m61r-0.0.2"), repos=NULL, type='source')
 
 # clean
-unlink(file.path("~","m61r-0.0.1"),recursive=TRUE)
-file.remove(file.path("~","m61r-0.0.1.zip"))
+unlink(file.path("~","m61r-0.0.2"),recursive=TRUE)
+file.remove(file.path("~","m61r-0.0.2.zip"))
 ```
 
 ## Usage
