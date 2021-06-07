@@ -8,7 +8,7 @@ Data manipulation in one package and in base R.
 
 'dplyr' and 'tidyr'-like in one place.
 
-'pipe' effect replace by object 'm61r'.
+'pipe' effect replaced by object 'm61r'.
 
 Nothing else than base R to build the package.
 
