@@ -1,14 +1,24 @@
 # m61r
 
+![](http://cranlogs.r-pkg.org/badges/last-month/m61r)
+
 Minimal. No dependencies.
 
-Data manipulation in one package and in base r.
+Data manipulation in one package and in base R.
 
 'dplyr' and 'tidyr'-like in one place.
 
-Nothing else than base r to build the package.
+'pipe' effect replace by object 'm61r'.
 
-## Installation from github in base r
+Nothing else than base R to build the package.
+
+## Installation from CRAN
+
+```R
+install.packages("m61r")
+```
+
+## Installation from github in base R
 
 ```R
 setwd("~")
@@ -37,6 +47,8 @@ file.remove(file.path("~","m61r-0.0.2.zip"))
 
 ## Usage
 
+### example 1: filter, mutate, group_by, ...
+
 ```R
 library(m61r)
 
@@ -47,7 +59,33 @@ co2$group_by(~c(Type,Treatment))
 co2$summarise(foo=~mean(uptake),bar=~sd(uptake))
 co2 # get results
 
-head(co2) # back to normal
+co2 # back to normal
+```
 
+### example 2: gather and spread
+```R
+library(m61r)
 
+## gather
+df3 <- data.frame(id = 1:4,
+                  age = c(40,50,60,50),
+                  dose.a1 = c(1,2,1,2),
+                  dose.a2 = c(2,1,2,1),
+                  dose.a14 = c(3,3,3,3))
+
+res <- m61r::m61r(df3)
+res$gather(pivot = c("id","age"))
+res
+res # back to normal
+
+## spread
+res$gather(pivot = c("id","age"))
+
+df4 <- rbind(res[],
+  data.frame(id=5, age=20,parameters="dose.a14",values=8),
+  data.frame(id=6, age=10,parameters="dose.a1",values=5))
+
+tmp <- m61r::m61r(df4)
+tmp$spread(col_name="parameters",col_values="values",pivot=c("id","age"))
+tmp
 ```
