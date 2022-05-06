@@ -126,6 +126,21 @@ m61r <- function(df=NULL){
     }
 
     ###########
+    # bind    #
+    ###########
+    rbind <- function(...){
+      on.exit(group_ <<- NULL,add=TRUE)
+      result_ <<- rbind_(result_, ...)
+      invisible()
+    }
+
+    cbind <- function(...){
+      on.exit(group_ <<- NULL,add=TRUE)
+      result_ <<- cbind_(result_, ...)
+      invisible()
+    }
+
+    ###########
     # reshape #
     ###########
     gather <- function(new_col_name = "parameters",new_col_values = "values",pivot=NULL){
