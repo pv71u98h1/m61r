@@ -1,6 +1,6 @@
 Package: m61r
 Type: Package
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: c(person("Jean-Marie","Lepioufle", , "pv71u98h1@gmail.com", c("aut","cre")))
 Title: Package About Data Manipulation in Pure Base R
 Description: Data manipulation in one package and in base R.
