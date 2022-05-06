@@ -6,6 +6,14 @@
 \alias{names.m61r}
 \alias{dim.m61r}
 \alias{as.data.frame.m61r}
+\alias{rbind.m61r}
+\alias{cbind.m61r}
+\alias{left_join}
+\alias{anti_join}
+\alias{full_join}
+\alias{inner_join}
+\alias{right_join}
+\alias{semi_join}
 \encoding{UTF-8}
 \title{Create m61r object}
 \description{
@@ -25,6 +33,10 @@ m61r(df = NULL)
 \method{dim}{m61r}(x, ...)
 
 \method{as.data.frame}{m61r}(x, ...)
+
+\method{rbind}{m61r}(x, ...)
+
+\method{cbind}{m61r}(x, ...)
 
 }
 \arguments{
@@ -57,6 +69,9 @@ In addition,
 \item \code{names.m61r} provides the names of the column of the internal \code{data.frame} embedded to the object \code{m61r}.
 \item \code{dim.m61r} provides the dimensions of the internal \code{data.frame} embedded to the object \code{m61r}.
 \item \code{as.data.frame.m61r} extracts the internal \code{data.frame} embedded to the object \code{m61r}.
+\item \code{cbind.m61r} combines by _c_olumns two objects \code{m61r}.
+\item \code{rbind.m61r} combines by _r_ows two objects \code{m61r}.
+\item \code{left_join}, \code{anti_join}, \code{full_join}, \code{inner_join}, \code{right_join}, \code{semi_join} join two objects \code{m61r}.
 }
 
 Finally, it is possible to clone a \code{m61r} object into a new one by using the internal function \code{clone}.
@@ -165,6 +180,12 @@ Finally, it is possible to clone a \code{m61r} object into a new one by using th
   tmp2 <- m61r(df=books)
   tmp2$anti_join(authors, by.x = "name", by.y = "surname")
   tmp2
+
+  ## with two m61r objects
+  tmp1 <- m61r(books)
+  tmp2 <- m61r(authors)
+  tmp3 <- anti_join(tmp1,tmp2, by.x = "name", by.y = "surname")
+  tmp3
 
   # Reshape
 
