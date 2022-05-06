@@ -25,7 +25,7 @@ install.packages("m61r")
 ```R
 setwd("~")
 
-download.file("https://github.com/pv71u98h1/m61r/archive/0.0.2.zip",destfile="m61r-0.0.3.zip")
+download.file("https://github.com/pv71u98h1/m61r/archive/0.0.3.zip",destfile="m61r-0.0.3.zip")
 unzip("m61r-0.0.3.zip")
 
 # install
