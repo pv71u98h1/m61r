@@ -12,6 +12,8 @@ Data manipulation in one package and in base R.
 
 Nothing else than base R to build the package.
 
+R-package 'm61r' is at the core of [m61r-cli](https://github.com/pv71u98h1/m61r-cli), data manipulation in bash command line.
+
 ## Installation from CRAN
 
 ```R
@@ -23,32 +25,31 @@ install.packages("m61r")
 ```R
 setwd("~")
 
-download.file("https://github.com/pv71u98h1/m61r/archive/0.0.2.zip",destfile="m61r-0.0.2.zip")
-unzip("m61r-0.0.2.zip")
+download.file("https://github.com/pv71u98h1/m61r/archive/0.0.2.zip",destfile="m61r-0.0.3.zip")
+unzip("m61r-0.0.3.zip")
 
 # install
-install.packages(file.path("~","m61r-0.0.2"), repos=NULL, type='source')
+install.packages(file.path("~","m61r-0.0.3"), repos=NULL, type='source')
 
 # build vignettes
-vign <- list.files(file.path("~","m61r-0.0.2","vignettes"))
-dir.create(file.path("~","m61r-0.0.2","inst","doc"),recursive=TRUE)
+vign <- list.files(file.path("~","m61r-0.0.3","vignettes"))
+dir.create(file.path("~","m61r-0.0.3","inst","doc"),recursive=TRUE)
 lapply(vign,function(x){
-   tools::buildVignette(file   = file.path("~","m61r-0.0.2","vignettes",x),
-                 dir    = file.path("~","m61r-0.0.2","inst","doc"))
+   tools::buildVignette(file   = file.path("~","m61r-0.0.3","vignettes",x),
+                 dir    = file.path("~","m61r-0.0.3","inst","doc"))
 })
 
 # install the vignettes
-install.packages(file.path("~","m61r-0.0.2"), repos=NULL, type='source')
+install.packages(file.path("~","m61r-0.0.3"), repos=NULL, type='source')
 
 # clean
-unlink(file.path("~","m61r-0.0.2"),recursive=TRUE)
-file.remove(file.path("~","m61r-0.0.2.zip"))
+unlink(file.path("~","m61r-0.0.3"),recursive=TRUE)
+file.remove(file.path("~","m61r-0.0.3.zip"))
 ```
 
 ## Usage
 
-### example 1: filter, mutate, group_by, ...
-
+### Example 1: pipeline with 1 step cache
 ```R
 library(m61r)
 
@@ -56,36 +57,59 @@ co2 <- m61r(CO2)
 co2$filter(~Plant %in% c("Qn1","Qc3"))
 co2$mutate(z1=~uptake/conc,y=~conc/100)
 co2$group_by(~c(Type,Treatment))
-co2$summarise(foo=~mean(uptake),bar=~sd(uptake))
-co2 # get results
+co2$summarise(foo=~mean(z1),bar=~sd(y))
+co2 # print results
 
-co2 # back to normal
+head(co2) # back to normal
 ```
 
-### example 2: gather and spread
+### Example 2: get only a data.frame as result
 ```R
-library(m61r)
+co2 <- m61r(CO2)
+co2$filter(~Plant %in% c("Qn1","Qc3"))
+co2$transmutate(z1=~uptake/conc,y=~conc/100)
+tmp <- co2[] # get only the data.frame and not the whole m61r object
 
-## gather
-df3 <- data.frame(id = 1:4,
-                  age = c(40,50,60,50),
-                  dose.a1 = c(1,2,1,2),
-                  dose.a2 = c(2,1,2,1),
-                  dose.a14 = c(3,3,3,3))
+head(tmp)
 
-res <- m61r::m61r(df3)
-res$gather(pivot = c("id","age"))
-res
-res # back to normal
+class(tmp)
+```
 
-## spread
-res$gather(pivot = c("id","age"))
+### Example 3: manipulation of a m61r object
+```R
+co2 <- m61r(CO2)
+head(co2)
+names(co2)
+dim(co2)
+co2[1,]
+head(co2[,2:3])
+co2[1:10,1:3]
+co2[1,"Plant"]
+str(co2)
 
-df4 <- rbind(res[],
-  data.frame(id=5, age=20,parameters="dose.a14",values=8),
-  data.frame(id=6, age=10,parameters="dose.a1",values=5))
+co2[1,"conc"] <- 100
+co2[1,] # w/temporary change
+co2[1,] # back to normal
 
-tmp <- m61r::m61r(df4)
-tmp$spread(col_name="parameters",col_values="values",pivot=c("id","age"))
-tmp
+# WARNING: Keep the brackets to manipulate the intern data.frame
+co2[] <- co2[-1,]
+co2[1:3,] # temporary result
+co2[1:3,] # back to normal
+
+# ... OR you will destroy co2, and only keep the data.frame
+# co2 <- co2[-1,]
+# class(co2) # data.frame
+
+# cloning
+foo <- co2 # This will only create
+           # a second variable that points
+           # on the same object (i.e not cloning)
+str(co2)
+str(foo)
+
+# Instead, cloning into a new environment
+foo <- co2$clone()
+str(co2)
+str(foo)
+
 ```
