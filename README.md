@@ -1,6 +1,6 @@
 # m61r
 
-![](http://cranlogs.r-pkg.org/badges/last-month/m61r)
+[](http://cranlogs.r-pkg.org/badges/last-month/m61r)
 
 Minimal. No dependencies.
 
