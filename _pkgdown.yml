@@ -1,0 +1,28 @@
+url: https://pv71u98h1.github.io/m61r/
+template:
+  bootstrap: 5
+  bootswatch: flatly
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [github]
+
+articles:
+  - title: Getting Started
+    navbar: Introduction
+    contents:
+      - m61r_object
+      - primitives
+  - title: Advanced Usage
+    navbar: Advanced
+    contents:
+      - m61r_advanced
+      - m61r_temporal
+
+development:
+  mode: release
+  llm: false
+
+new_config: true
+
