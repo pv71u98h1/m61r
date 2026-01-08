@@ -7,11 +7,8 @@
 Reshape a data.frame.
 }
 \usage{
-gather_(df, new_col_name = "parameters", new_col_values = "values",
-  pivot)
-
-spread_(df, col_name, col_values, pivot)
-
+# gather_(df, new_col_name = "parameters", new_col_values = "values", pivot)
+# spread_(df, col_name, col_values, pivot)
 }
 \arguments{
 \item{df}{data.frame}
@@ -57,6 +54,38 @@ df5 <- rbind(df4,
     data.frame(id=6, age=10,parameters="dose.a1",values=5))
 
 spread_(df5,col_name="parameters",col_values="values",pivot=c("id","age"))
+
+ # with m61r class
+co2 <- m61r(df=CO2)
+
+## gather
+df3 <- data.frame(id = 1:4,
+                age = c(40,50,60,50),
+                dose.a1 = c(1,2,1,2),
+                dose.a2 = c(2,1,2,1),
+                dose.a14 = c(3,3,3,3))
+
+df4 <- m61r(df3)
+df4$gather(pivot = c("id","age"))
+df4
+
+## spread
+df3 <- data.frame(id = 1:4,
+                age = c(40,50,60,50),
+                dose.a1 = c(1,2,1,2),
+                dose.a2 = c(2,1,2,1),
+                dose.a14 = c(3,3,3,3))
+
+df4 <- gather_(df3,pivot = c("id","age"))
+df4 <- rbind(df4,
+data.frame(id=5, age=20,parameters="dose.a14",values=8),
+data.frame(id=6, age=10,parameters="dose.a1",values=5))
+
+tmp <- m61r(df4)
+tmp$spread(col_name="parameters",col_values="values",pivot=c("id","age"))
+tmp
+
+
 
 }
 \keyword{m61r}

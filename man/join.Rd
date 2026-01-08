@@ -11,17 +11,12 @@
   Join two data.frames.
 }
 \usage{
-left_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
-
-anti_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
-
-full_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
-
-inner_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
-
-right_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
-
-semi_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
+# left_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
+# anti_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
+# full_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
+# inner_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
+# right_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
+# semi_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
 
 }
 \arguments{
@@ -34,6 +29,7 @@ semi_join_(df, df2, by = NULL, by.x = NULL, by.y = NULL)
 \item{by.x}{column names of the pivot of data.frame 1}
 
 \item{by.y}{column names of the pivot of data.frame 2}
+
 }
 \value{
 The functions return a data frame.
@@ -87,5 +83,46 @@ head(tmp)
 
 tmp <- anti_join_(books,authors, by.x = "name", by.y = "surname")
 head(tmp)
+
+
+  # with m61r class
+  
+  ## inner join
+  tmp <- m61r(df=authors)
+
+  tmp$inner_join(books, by.x = "surname", by.y = "name")
+  tmp
+
+  ## left join
+  tmp$left_join(books, by.x = "surname", by.y = "name")
+  tmp
+
+  ## right join
+  tmp$right_join(books, by.x = "surname", by.y = "name")
+  tmp
+
+  ## full join
+  tmp$full_join(books, by.x = "surname", by.y = "name")
+  tmp
+
+  ## semi join
+  tmp$semi_join(books, by.x = "surname", by.y = "name")
+  tmp
+
+  ## anti join #1
+  tmp$anti_join(books, by.x = "surname", by.y = "name")
+  tmp
+
+  ## anti join #2
+  tmp2 <- m61r(df=books)
+  tmp2$anti_join(authors, by.x = "name", by.y = "surname")
+  tmp2
+
+  ## with two m61r objects
+  tmp1 <- m61r(books)
+  tmp2 <- m61r(authors)
+  tmp3 <- anti_join(tmp1,tmp2, by.x = "name", by.y = "surname")
+  tmp3
+
 }
 \keyword{m61r}

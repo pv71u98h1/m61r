@@ -6,7 +6,7 @@
   Filter rows of a data.frame with conditions.
 }
 \usage{
-filter_(df, subset = NULL)
+# filter_(df, subset = NULL)
 }
 \arguments{
 \item{df}{data.frame}
@@ -29,6 +29,16 @@ head(tmp)
 
 tmp <- filter_(CO2,~Type=="Quebec")
 head(tmp)
+
+# with m61r class
+co2 <- m61r(df=CO2)
+
+co2$filter(~Plant=="Qn1")
+co2
+
+co2$filter(~Type=="Quebec")
+co2
+
 
 }
 \keyword{m61r}

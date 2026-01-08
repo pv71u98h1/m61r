@@ -6,7 +6,7 @@
   Select columns of a data.frame.
 }
 \usage{
-select_(df, variable = NULL)
+# select_(df, variable = NULL)
 }
 \arguments{
 \item{df}{data.frame}
@@ -34,5 +34,21 @@ Properties:
 
   tmp <- select_(CO2,variable=~-(Plant:Treatment))
   head(tmp)
+
+  # with m611r class
+  co2 <- m61r(df=CO2)
+
+  co2$select(~Type)
+  co2
+
+  co2$select(~c(Plant,Type))
+  co2
+
+  co2$select(~-Type)
+  co2
+
+  co2$select(variable=~-(Plant:Treatment))
+  co2
+
 }
 \keyword{m61r}

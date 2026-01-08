@@ -20,7 +20,7 @@
 Create a m61r object that enables to run a sequence of operations on a data.frame.
 }
 \usage{
-m61r(df = NULL)
+# m61r(df = NULL)
 
 \method{[}{m61r}(x, i, j, ...)
 
@@ -57,7 +57,7 @@ m61r(df = NULL)
 The function \code{m61r} returns an object of type \code{m61r}.
 
 Argument \code{df} get stored internally to the object \code{m61r}.
-One manipulates the internal \code{data.frame} by using internal functions similar to the ones implemented in package \code{m61r} for \code{data.frames} as \code{arrange}, \code{desange}, \code{filter}, \code{join} and its relatives, \code{mutate} and \code{transmutate}, \code{gather} and \code{spread}, \code{select}, \code{groupe_by}, \code{summarise}, \code{values} and \code{modify}.
+One manipulates the internal \code{data.frame} by using internal functions similar to the ones implemented in package \code{m61r} for \code{data.frames} as \code{arrange}, \code{desange}, \code{filter}, \code{join} and its relatives, \code{mutate} and \code{transmutate}, \code{gather} and \code{spread}, \code{select}, \code{group_by}, \code{summarise}, \code{values} and \code{modify}.
 The result of the last action is stored internally to the object \code{m61r} until the internal function \code{values} get called.
 It is thus possible to create a readable sequence of actions on a \code{data.frame}.
 
@@ -73,6 +73,12 @@ In addition,
 \item \code{rbind.m61r} combines by _r_ows two objects \code{m61r}.
 \item \code{left_join}, \code{anti_join}, \code{full_join}, \code{inner_join}, \code{right_join}, \code{semi_join} join two objects \code{m61r}.
 }
+
+The \code{m61r} object maintains an internal state. For advanced transformations, 
+  users can use \code{.SD()} within formulas. \code{.SD()} (Subset of Data) 
+  refers to the current \code{data.frame} being processed. 
+  If a \code{group_by} operation is active, \code{.SD()} refers to the 
+  current group only.
 
 Finally, it is possible to clone a \code{m61r} object into a new one by using the internal function \code{clone}.
 
@@ -106,8 +112,11 @@ Finally, it is possible to clone a \code{m61r} object into a new one by using th
   co2$mutate(z=~conc/uptake)
   co2
 
-  co2$mutate(mean=~mean(uptake))
-  co2
+
+  #co2$mutate(mean=~mean(uptake))
+  #co2
+  #Warning message:
+  #In FUN(X[[i]], ...) : Expression mean has incompatible length.
 
   co2$mutate(z1=~uptake/conc,y=~conc/100)
   co2
@@ -118,8 +127,9 @@ Finally, it is possible to clone a \code{m61r} object into a new one by using th
   # summarise
   co2$summarise(mean=~mean(uptake),sd=~sd(uptake))
   co2
-
-  co2$group_by(~c(Type,Treatment))
+  
+  co2 = m61r(CO2)
+  co2$group_by(~cbind(Type,Treatment))
   co2$summarise(mean=~mean(uptake),sd=~sd(uptake))
   co2
 
@@ -133,59 +143,6 @@ Finally, it is possible to clone a \code{m61r} object into a new one by using th
   co2$desange(~c(Treatment,conc,uptake))
   co2
 
-  # join
-  authors <- data.frame(
-               surname = I(c("Tukey", "Venables", "Tierney", "Ripley", "McNeil")),
-               nationality = c("US", "Australia", "US", "UK", "Australia"),
-               deceased = c("yes", rep("no", 4)))
-
-  books <- data.frame(
-             name = I(c("Tukey", "Venables", "Tierney","Ripley",
-                   "Ripley", "McNeil", "R Core")),
-            title = c("Exploratory Data Analysis",
-                   "Modern Applied Statistics ...",
-                   "LISP-STAT",
-                   "Spatial Statistics", "Stochastic Simulation",
-                   "Interactive Data Analysis",
-                   "An Introduction to R"),
-         other.author = c(NA, "Ripley", NA, NA, NA, NA,"Venables & Smith"))
-
-  ## inner join
-  tmp <- m61r(df=authors)
-
-  tmp$inner_join(books, by.x = "surname", by.y = "name")
-  tmp
-
-  ## left join
-  tmp$left_join(books, by.x = "surname", by.y = "name")
-  tmp
-
-  ## right join
-  tmp$right_join(books, by.x = "surname", by.y = "name")
-  tmp
-
-  ## full join
-  tmp$full_join(books, by.x = "surname", by.y = "name")
-  tmp
-
-  ## semi join
-  tmp$semi_join(books, by.x = "surname", by.y = "name")
-  tmp
-
-  ## anti join #1
-  tmp$anti_join(books, by.x = "surname", by.y = "name")
-  tmp
-
-  ## anti join #2
-  tmp2 <- m61r(df=books)
-  tmp2$anti_join(authors, by.x = "name", by.y = "surname")
-  tmp2
-
-  ## with two m61r objects
-  tmp1 <- m61r(books)
-  tmp2 <- m61r(authors)
-  tmp3 <- anti_join(tmp1,tmp2, by.x = "name", by.y = "surname")
-  tmp3
 
   # Reshape
 
@@ -230,12 +187,7 @@ Finally, it is possible to clone a \code{m61r} object into a new one by using th
   co2[1,] # temporary result
   co2[1,] # back to normal
 
-  # WARNING:
-  # Keep the brackets to manipulate the intern data.frame
-  co2[] <- co2[-1,]
-  co2[1:3,] # temporary result
-  co2[1:3,] # back to normal
-
+  # WARNING:Keep the brackets to manipulate the intern data.frame
   # ... OR you will destroy co2, and only keep the data.frame
   # co2 <- co2[-1,]
   # class(co2) # data.frame

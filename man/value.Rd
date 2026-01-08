@@ -7,9 +7,8 @@
 Get or assign a value to a data.frame
 }
 \usage{
-value_(df, i, j)
-
-'modify_<-'(df,i,j,value)
+# value_(df, i, j)
+# 'modify_<-'(df,i,j,value)
 }
 \arguments{
 \item{df}{data.frame}
