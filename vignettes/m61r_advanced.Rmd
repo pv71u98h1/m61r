@@ -1,0 +1,114 @@
+---
+title: "Advanced Data Manipulation with m61r in Pure Base R"
+author: "pv71u98h1"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Advanced Data Manipulation with m61r in Pure Base R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(m61r)
+set.seed(42)
+
+```
+
+# Introduction
+
+The `m61r` package provides a grammar for data manipulation prioritising speed and memory efficiency.
+
+# The Pipeline Interface
+
+The `m61r` object allows for seamless chaining of operations.
+
+```{r example_pipeline}
+p <- m61r(mtcars)
+p$filter(~mpg > 20)
+p$select(~c(mpg, cyl, hp))
+p$mutate(hp_norm = ~hp / max(hp))
+p$head()
+
+```
+
+# Advanced Scoped Operations
+
+## With Subset Data (.SD)
+
+You can use the `.SD()` method within a formula to access the current data subset for advanced transformations.
+
+```{r scoped_mutate_SD}
+p <- m61r(iris)
+p$mutate(scaled = ~lapply(.SD()[, vapply(.SD(), is.numeric, logical(1))], 
+                          function(x) x * 100))
+p$head(3)
+
+```
+
+## With `select_cols`
+
+The `.select_cols` helper allows for clean, functional column selection based on predicates.
+
+```{r scoped_mutate_select_cols}
+tmp <- m61r(mtcars)
+tmp$mutate(all_num = ~lapply(.SD()[, .select_cols(.SD(), is.numeric)], 
+                             function(x) x * 10))
+tmp$head(3)
+
+```
+
+## Conversions
+
+Easily convert multiple columns at once using standard R functions inside the `m61r` environment.
+
+```{r conversions_numeric}
+p <- m61r(mtcars)
+# Convert all columns to numeric using lapply for Base R purity
+p$mutate(~lapply(.SD(), as.numeric))
+
+```
+
+## Pattern Matching with Grep
+
+Use `grep` to apply transformations to columns matching specific naming patterns.
+
+```{r normalization}
+p <- m61r(mtcars)
+# Normalize only columns that contain the word "mpg" or "hp"
+p$mutate(~lapply(.SD()[, grep("mpg|hp", names(.SD()))], function(x) x / max(x)))
+p$head()
+
+```
+
+# Complex Conditional Logic
+
+The `case_when` function provides a vectorised way to handle complex conditional assignments.
+
+```{r case_when}
+p <- m61r(mtcars)
+p$mutate(category = ~case_when(
+  mpg > 25, "Eco",
+  mpg > 18, "Standard",
+  "High-Perf"
+))
+head(p[, c("mpg", "category")], 5)
+
+```
+
+# Across
+
+The `across()` function provides a familiar syntax for applying functions across a selection of columns during summarisation.
+
+```{r across}
+p <- m61r(mtcars)
+p$summarise(
+  avg = ~across(c("mpg", "disp", "hp"), mean)
+)
+
+```
+
+# Conclusion
+
+By staying true to Base R, `m61r` ensures that your code remains portable, fast, and light.
+

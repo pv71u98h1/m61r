@@ -1,0 +1,150 @@
+---
+title: "Temporal Data Manipulation with m61r"
+author: "pv71u98h1"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Temporal Data Manipulation with m61r}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(m61r)
+
+```
+
+# Introduction
+
+Leveraging the memory efficiency of Base R, the m61r package provides tools for manipulating time series, such as expanding time intervals into discrete slots or performing window-based aggregations.
+# Temporal Function Reference
+
+In `m61r`, temporal operations rely on R primitives executed inside `mutate()` and `summarise()`.
+
+| Operation | Base R Expression (`m61r`) |
+| --- | --- |
+| Cast to Date | `~as.Date(col)` |
+| Cast to Datetime | `~as.POSIXct(col)` |
+| Datetime Sequence | `~seq(from, to, by="1 day")` |
+| Extract Hour | `~as.POSIXlt(col)$hour` |
+
+# Formatting and Component Extraction
+
+The `mutate()` and `transmutate()` methods allow for the creation of derived columns using standard R `format()` codes.
+
+| Component | R Format Code | Example Expression |
+| --- | --- | --- |
+| Year | `%Y` | `year = ~format(dt, "%Y")` |
+| Month (numeric) | `%m` | `month = ~format(dt, "%m")` |
+| Day of the week | `%w` (0-6) | `weekday = ~format(dt, "%w")` |
+| Hour (24h) | `%H` | `hour = ~format(dt, "%H")` |
+| Grouping Key | `%Y-%m` | `ym_key = ~format(dt, "%Y-%m")` |
+
+# Practical Examples
+
+## Component Extraction
+
+```{r example1}
+raw_data <- data.frame(
+  timestamp = as.POSIXct(c("2023-01-01 10:00:00", "2023-01-01 11:30:00")),
+  value = c(10, 20)
+)
+data <- m61r(raw_data)
+
+data$mutate(
+  year  = ~format(timestamp, "%Y"),
+  hour  = ~as.POSIXlt(timestamp)$hour
+)
+
+```
+
+# Interval Expansion
+
+When having a "start" and an "end" time, a powerful way to analyze the data is to "explode" the intervals into individual rows.
+
+## 1. Creating Sequences
+
+```{r step1}
+df_intervals <- data.frame(
+  id = 1,
+  start = as.POSIXct("2025-01-01 08:00"),
+  end   = as.POSIXct("2025-01-01 10:00"),
+  load  = 100
+)
+
+p <- m61r(df_intervals)
+p$mutate(slot = ~Map(function(s, e) seq(s, e, by = "hour"), start, end))
+
+```
+
+## 2. Structural Explosion
+
+The `explode` method unnests the list-column, duplicating other column values for each element in the sequence.
+
+```{r step2}
+p$explode("slot")
+p$head()
+
+```
+
+# Approximate Matching with As-Of Joins
+
+As-of joins are essential for synchronizing two time-series where timestamps do not match exactly.
+
+```{r as_of_example}
+prices <- data.frame(
+  ts = as.POSIXct("2025-01-01 08:00") + c(0, 3600),
+  val = c(10, 12)
+)
+
+df_sync <- data.frame(ts = as.POSIXct("2025-01-01 09:30"), event = "Trade")
+p_sync <- m61r(df_sync)
+p_sync$join_asof(prices, by_x = "ts", by_y = "ts", direction = "backward")
+
+```
+
+# Date Extraction Example
+
+The `m61r` object handles `Date`-class objects just as efficiently as `POSIXct`.
+
+```{r step4}
+df_dates <- data.frame(
+  id = 1:2,
+  entry = as.Date(c("2020-01-01", "2021-01-01")),
+  exit  = as.Date(c("2020-06-01", "2021-06-01"))
+)
+
+p_dates <- m61r(df_dates)
+p_dates$mutate(year = ~as.POSIXlt(entry)$year + 1900)
+p_dates$head()
+
+```
+
+# Time-Based Aggregation
+
+A common task in time-series analysis is to bin data into specific time intervals (e.g., hourly or daily) and compute statistics. The following example demonstrates how to create a "bin" key and use it for grouping.
+
+## Hourly Summary Example
+```{r temporal_aggregation}
+# Create a dataset with random timestamps within a day
+set.seed(123)
+ts_data <- data.frame(
+  time = as.POSIXct("2025-01-01 00:00:00") + runif(50, 0, 86400),
+  consumption = rnorm(50, 500, 100)
+)
+
+p_agg <- m61r(ts_data)
+
+p_agg$mutate(hour_bin = ~format(time, "%Y-%m-%d %H:00"))
+p_agg$group_by(~hour_bin)
+p_agg$summarise(
+  n_obs = ~length(consumption),
+  avg_load = ~mean(consumption)
+)
+
+p_agg$head(5)
+```
+
+# Conclusion
+
+By staying true to Base R, `m61r` ensures that your temporal workflows remain portable, fast, and light.

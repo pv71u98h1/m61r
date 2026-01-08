@@ -1,0 +1,90 @@
+---
+title: "The m61r Object"
+author: "pv71u98h1"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The m61r Object}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(m61r)
+
+```
+
+# Introduction
+
+The `m61r` object is a lightweight container that enables all the functions present in the package while providing a fluent "pipeline" interface.
+
+The primary goal of this package is to provide a powerful, zero-dependency grammar for data manipulation in pure Base R.
+
+# Example 1: Pipeline with 1-Step Cache
+
+The `m61r` object maintains an internal state. When you call methods like `filter`, `mutate`, or `summarise`, the object is updated in place, allowing you to chain operations efficiently.
+
+```{r edit1}
+co2 <- m61r(CO2)
+co2$filter(~Plant %in% c("Qn1", "Qc3"))
+co2$mutate(z1 = ~uptake/conc, y = ~conc/100)
+co2$group_by(~c(Type, Treatment))
+co2$summarise(foo = ~mean(z1), bar = ~sd(y))
+co2$head()
+
+# View the internal data.frame
+co2[]
+
+```
+
+# Example 2: Extracting the Data Frame
+
+If you need to return to a standard R workflow, you can extract the internal data frame at any time using the `[]` operator.
+
+```{r edit2}
+co2 <- m61r(CO2)
+co2$filter(~Plant %in% c("Qn1", "Qc3"))
+co2$transmutate(z1 = ~uptake/conc, y = ~conc/100)
+co2$head()
+
+# Get only the data.frame and not the whole m61r object
+tmp <- co2[]
+
+class(tmp)
+
+```
+
+# Example 3: Manipulation of an m61r Object
+
+The `m61r` object mimics several data frame behaviors, such as `names()`, `dim()`, and standard subsetting.
+
+```{r edit3}
+co2 <- m61r(CO2)
+names(co2)
+dim(co2)
+co2[1,]
+co2[1:10, 1:3]
+co2[1, "Plant"]
+str(co2)
+
+# Sub-assignment (temporary changes)
+co2[1, "conc"] <- 100
+co2[1,]
+
+```
+
+> **Warning:** Be careful when re-assigning the object itself. Always use the methods or brackets for manipulation. If you perform `co2 <- co2[-1,]`, you will replace the `m61r` object with a standard `data.frame`.
+
+## Cloning
+
+Because `m61r` objects are built on R environments, a simple assignment (`foo <- co2`) creates a reference to the **same** data. To create a completely independent copy, use the `$clone()` method.
+
+```{r cloning}
+# Cloning into a new environment
+foo <- co2$clone()
+
+# Verify they are distinct objects in memory
+str(co2)
+str(foo)
+
+```

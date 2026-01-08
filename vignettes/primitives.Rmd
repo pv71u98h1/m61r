@@ -1,0 +1,94 @@
+---
+title: "dplyr-and-tidyr-like Functions Written in Base R"
+author: "pv71u98h1"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{dplyr-and-tidyr-like Functions Written in Base R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(m61r)
+
+```
+
+# Introduction
+
+The R-package `m61r` gathers functions similar to the ones present in `dplyr` and `tidyr`, but written entirely in Base R without any external dependencies. All functions are designed to work directly with standard `data.frames`.
+
+# filter
+
+The `filter_` function subsets a data frame, retaining all rows that satisfy your specific conditions.
+
+```{r filter_eg}
+tmp <- filter_(CO2, ~Plant == "Qn1")
+head(tmp)
+
+```
+
+# select
+
+The `select_` function allows you to zoom in on specific columns of interest.
+
+```{r select_eg}
+tmp <- select_(CO2, ~c(Plant, Type))
+head(tmp, 2)
+
+```
+
+# mutate / transmutate
+
+`mutate_` adds new variables while preserving existing ones, whereas `transmutate_` keeps only the newly created variables.
+
+```{r mutate_eg}
+tmp <- mutate_(CO2, z = ~conc / uptake)
+head(tmp, 2)
+
+```
+
+# summarise
+
+`summarise_` creates a new data frame with aggregated statistics. It can be used on the whole data frame or on specific groups.
+
+```{r summarise_eg}
+# Global summary
+summarise_(CO2, mean = ~mean(uptake), sd = ~sd(uptake))
+
+# Grouped summary
+g_info <- get_group_indices_(CO2, ~c(Type, Treatment))
+summarise_(CO2, group_info = g_info, mean = ~mean(uptake))
+
+```
+
+# join
+
+`m61r` provides a full suite of join functions. Here is an example of an inner join between two datasets.
+
+```{r data_join, echo=FALSE}
+authors <- data.frame(
+    surname = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
+    nationality = c("US", "Australia", "US", "UK", "Australia"))
+
+books <- data.frame(
+    name = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
+    title = c("EDA", "MASS", "LISP-STAT", "Spatial", "Interactive"))
+
+```
+
+```{r join_eg}
+inner_join_(authors, books, by.x = "surname", by.y = "name")
+
+```
+
+# reshape
+
+The `gather_` function transforms data from a "wide" format to a "long" format, making it easier to analyze certain types of data.
+
+```{r reshape_eg}
+df3 <- data.frame(id = 1:2, age = c(40, 50), dose.a1 = c(1, 2), dose.a2 = c(2, 1))
+df4 <- gather_(df3, pivot = c("id", "age"))
+df4
+
+```
