@@ -1,16 +1,26 @@
 Package: m61r
 Type: Package
-Version: 0.0.3
+Version: 0.1.0
 Authors@R: c(person("Jean-Marie","Lepioufle", , "pv71u98h1@gmail.com", c("aut","cre")))
 Title: Package About Data Manipulation in Pure Base R
-Description: Data manipulation in one package and in base R.
-  Minimal. No dependencies.
-  'dplyr' and 'tidyr'-like in one place.
-  Nothing else than base R to build the package.
+Description: A lightweight, dependency-free data engine for R that provides 
+    a grammar for tabular and time-series manipulation. Built entirely on 
+    Base R, 'm61r' offers a fluent, chainable API inspired by modern data 
+    tools while prioritizing memory efficiency and speed. It includes 
+    optimized versions of common data verbs such as filtering, mutation, 
+    grouped aggregation, and approximate temporal joins, making it an 
+    ideal choice for environments where external dependencies are 
+    restricted or where performance in pure R is required.
 Depends:
-    R (>= 3.4.4)
+    R (>= 4.2.1)
 License: MIT + file LICENSE
 URL: https://github.com/pv71u98h1/m61r/
 BugReports: https://github.com/pv71u98h1/m61r/issues/
 Encoding: UTF-8
 LazyData: false
+RoxygenNote: 7.3.3
+VignetteBuilder: knitr
+Suggests: 
+    knitr,
+    rmarkdown
+
