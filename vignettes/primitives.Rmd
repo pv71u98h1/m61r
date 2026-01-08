@@ -1,10 +1,10 @@
 ---
-title: "dplyr-and-tidyr-like Functions Written in Base R"
+title: "m61r Primitives Written in Base R"
 author: "pv71u98h1"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{dplyr-and-tidyr-like Functions Written in Base R}
+  %\VignetteIndexEntry{m61r Primitives Written in Base R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
