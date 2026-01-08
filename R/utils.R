@@ -1,3 +1,4 @@
+#' @export
 expression_ <- function(df, group_info = NULL, fun_expr, envir = parent.frame()) {
   if (!inherits(df, "data.frame")) stop("df must be a data.frame")
   
@@ -23,7 +24,7 @@ expression_ <- function(df, group_info = NULL, fun_expr, envir = parent.frame())
 #########
 # GROUP #
 #########
-
+#' @export
 get_group_indices_ <- function(df, group = NULL) {
   if (!inherits(df, "data.frame")) stop("argument 'df' is not of class data.frame")
   if (is.null(group)) return(NULL)
@@ -59,19 +60,11 @@ group_col_ <- function(df,group){
   return(j)
 }
 
-# group_df_ <- function(df,group){
-#   j <- group_col_(df,group)
-#   split_v <- lapply(j,function(x){df[[x]]})
-#   names(split_v) <- names(df)[j]
-#   res <- unique(do.call("cbind.data.frame",split_v))
-#   row.names(res)<- NULL
-#   return(res)
-# }
-
 #############
 # CASE WHEN #
 #############
 
+#' @export
 case_when <- function(...) {
   args <- list(...)
   n_args <- length(args)
@@ -93,6 +86,7 @@ case_when <- function(...) {
   return(res)
 }
 
+#' @export
 create_key <- function(df, cols) {
     if (length(cols) == 1) {
         return(df[[cols]]) 
@@ -101,7 +95,7 @@ create_key <- function(df, cols) {
     return(do.call(interaction, c(df_factor, drop = TRUE))) 
 }
 
-
+#' @export
 .select_cols <- function(df, selection) {
   if (is.function(selection)) {
     return(names(df)[vapply(df, selection, logical(1))])
@@ -111,6 +105,7 @@ create_key <- function(df, cols) {
   stop("Selection must be a predicate function or a character vector of names.")
 }
 
+#' @export
 across <- function(cols, FUN, ...) {
   df_subset <- get(".SD", envir = parent.frame())()
   

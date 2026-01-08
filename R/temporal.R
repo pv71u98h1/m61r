@@ -1,3 +1,4 @@
+#' @export
 join_asof_ <- function(df, df2, by.x, by.y, direction = "backward") {
   if (!inherits(df, "data.frame") || !inherits(df2, "data.frame")) 
     stop("Arguments must be data.frames")
@@ -21,7 +22,7 @@ join_asof_ <- function(df, df2, by.x, by.y, direction = "backward") {
   return(res)
 }
 
-
+#' @export
 cut_time <- function(var, breaks_str) {
   call_expr <- substitute(cut(var, breaks = breaks_str), list(var = var, breaks_str = breaks_str))
   return(call_expr)

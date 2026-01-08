@@ -1,3 +1,4 @@
+#' @export
 m61r <- function(df=NULL){
 
   # private

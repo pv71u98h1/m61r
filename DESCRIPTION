@@ -12,7 +12,7 @@ Description: A lightweight, dependency-free data engine for R that provides
     ideal choice for environments where external dependencies are 
     restricted or where performance in pure R is required.
 Depends:
-    R (>= 4.2.1)
+    R (>= 4.2.0)
 License: MIT + file LICENSE
 URL: https://github.com/pv71u98h1/m61r/
 BugReports: https://github.com/pv71u98h1/m61r/issues/

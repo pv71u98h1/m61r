@@ -1,3 +1,4 @@
+#' @export
 `[.m61r` <- function(x,i,j,...){
   if (missing(i) & missing(j)){
      get("values",x)()
@@ -10,28 +11,34 @@
   }
 }
 
+#' @export
 `[<-.m61r` <- function(x,i,j,value){
   get("modify",x)(i,j,value)
   x
 }
 
+#' @export
 print.m61r <- function(x,...){
   res <- get("values",x)()
   print(res)
 }
 
+#' @export
 names.m61r <- function(x,...){
   get("process",x)(FUN=names,...)
 }
 
+#' @export
 dim.m61r <- function(x,...){
   get("process",x)(FUN=dim,...)
 }
 
+#' @export
 as.data.frame.m61r <- function(x,...){
   get("values",x)()
 }
 
+#' @export
 rbind.m61r <- function(x, ...) {
   datasets <- lapply(list(x, ...), function(obj) {
     if (inherits(obj, "m61r")) return(obj[]) 
@@ -41,6 +48,7 @@ rbind.m61r <- function(x, ...) {
   return(m61r::m61r(res_df))
 }
 
+#' @export
 cbind.m61r <- function(x, ...) {
   datasets <- lapply(list(x, ...), function(obj) {
     if (inherits(obj, "m61r")) return(obj[])
@@ -50,13 +58,13 @@ cbind.m61r <- function(x, ...) {
   return(m61r::m61r(res_df))
 }
 
-
-
+#' @export
 left_join <- function(x, y, ...) {
   UseMethod("left_join")
 }
 
-left_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
+#' @export
+left_join.m61r <- function(x, y, by = NULL, by.x = NULL, by.y = NULL, ...){
   datasets <- list(x,y)
   check_class <- lapply(datasets,function(x) inherits(x,"m61r"))
   check_class <- prod(unlist(check_class))
@@ -66,11 +74,13 @@ left_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
   return(m61r::m61r(res))
 }
 
+#' @export
 right_join <- function(x, y, ...) {
   UseMethod("right_join")
 }
 
-right_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
+#' @export
+right_join.m61r <- function(x, y, by = NULL, by.x = NULL, by.y = NULL, ...){
   datasets <- list(x,y)
   check_class <- lapply(datasets,function(x) inherits(x,"m61r"))
   check_class <- prod(unlist(check_class))
@@ -80,11 +90,13 @@ right_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
   return(m61r::m61r(res))
 }
 
+#' @export
 inner_join <- function(x, y, ...) {
   UseMethod("inner_join")
 }
 
-inner_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
+#' @export
+inner_join.m61r <- function(x, y, by = NULL, by.x = NULL, by.y = NULL, ...){
   datasets <- list(x,y)
   check_class <- lapply(datasets,function(x) inherits(x,"m61r"))
   check_class <- prod(unlist(check_class))
@@ -95,11 +107,13 @@ inner_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
   return(m61r::m61r(res))
 }
 
+#' @export
 full_join <- function(x, y, ...) {
   UseMethod("full_join")
 }
 
-full_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
+#' @export
+full_join.m61r <- function(x, y, by = NULL, by.x = NULL, by.y = NULL, ...){
   datasets <- list(x,y)
   check_class <- lapply(datasets,function(x) inherits(x,"m61r"))
   check_class <- prod(unlist(check_class))
@@ -109,11 +123,13 @@ full_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
   return(m61r::m61r(res))
 }
 
+#' @export
 semi_join <- function(x, y, ...) {
   UseMethod("semi_join")
 }
 
-semi_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
+#' @export
+semi_join.m61r <- function(x, y, by = NULL, by.x = NULL, by.y = NULL, ...){
   datasets <- list(x,y)
   check_class <- lapply(datasets,function(x) inherits(x,"m61r"))
   check_class <- prod(unlist(check_class))
@@ -123,11 +139,13 @@ semi_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
   return(m61r::m61r(res))
 }
 
+#' @export
 anti_join <- function(x, y, ...) {
   UseMethod("anti_join")
 }
 
-anti_join.m61r <- function(x,y,by=NULL,by.x=NULL,by.y=NULL){
+#' @export
+anti_join.m61r <- function(x, y, by = NULL, by.x = NULL, by.y = NULL, ...){
   datasets <- list(x,y)
   check_class <- lapply(datasets,function(x) inherits(x,"m61r"))
   check_class <- prod(unlist(check_class))

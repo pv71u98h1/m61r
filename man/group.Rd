@@ -1,4 +1,5 @@
 \name{get_group_indices_}
+\alias{get_group_indices_}
 \encoding{UTF-8}
 \title{Determine Grouping Structure for a data.frame}
 \description{
@@ -15,6 +16,10 @@
 \code{get_group_indices_} returns a list containing: \code{group_cols} (names), \code{indices} (a list of row indices per group, for fast subsetting), and \code{keys} (a data frame of unique group combinations). 
 }
 \examples{
+
+g_info <- get_group_indices_(CO2, ~c(Type, Treatment))
+summarise_(CO2, group_info = g_info, mean = ~mean(uptake))
+
 
 # Grouping with a Base R function: Group by the 'year' of a column 'Date'
 df_date <- data.frame(

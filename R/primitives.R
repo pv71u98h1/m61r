@@ -3,6 +3,7 @@
 # ARRANGE #
 ###########
 
+#' @export
 arrange_ <- function(df,...){
   if (inherits(df,"data.frame")) {
     expr <- list(...)
@@ -18,6 +19,7 @@ arrange_ <- function(df,...){
   } else stop("argument 'df' is not of class data.frame")
 }
 
+#' @export
 desange_ <- function(df,...){
   if (inherits(df,"data.frame")) {
     expr <- list(...)
@@ -81,6 +83,7 @@ filter_i <- function(df, subset) {
   }
 }
 
+#' @export
 filter_ <- function(df,subset=NULL){
   if (inherits(df,"data.frame")) {
     if (!(missing(subset))) {
@@ -99,6 +102,7 @@ filter_ <- function(df,subset=NULL){
 # JOIN #
 ########
 
+#' @export
 left_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   if (inherits(df,"data.frame") && inherits(df2,"data.frame")) {
     res <- merge(df, df2, by=by,by.x=by.x,by.y=by.y,all.x=TRUE, sort=FALSE)
@@ -106,6 +110,7 @@ left_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   } else stop("either arguments 'df' or/and 'df2' are not of class data.frame")
 }
 
+#' @export
 right_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   if (inherits(df,"data.frame") && inherits(df2,"data.frame")) {
     res <-  merge(df, df2, by=by,by.x=by.x,by.y=by.y,all.y=TRUE, sort=FALSE)
@@ -114,6 +119,7 @@ right_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
 
 }
 
+#' @export
 inner_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   if (inherits(df,"data.frame") && inherits(df2,"data.frame")) {
     res <- merge(df, df2, by=by,by.x=by.x,by.y=by.y, sort=FALSE)
@@ -121,6 +127,7 @@ inner_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   } else stop("either arguments 'df' or/and 'df2' are not of class data.frame")
 }
 
+#' @export
 full_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   if (inherits(df,"data.frame") && inherits(df2,"data.frame")) {
     res <- merge(df, df2, by=by,by.x=by.x,by.y=by.y,all=TRUE, sort=FALSE)
@@ -128,7 +135,7 @@ full_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   } else stop("either arguments 'df' or/and 'df2' are not of class data.frame")
 }
 
-
+#' @export
 semi_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   if (inherits(df,"data.frame") && inherits(df2,"data.frame")) {
 
@@ -147,6 +154,7 @@ semi_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   } else stop("either arguments 'df' or/and 'df2' are not of class data.frame")
 }
 
+#' @export
 anti_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
   if (inherits(df,"data.frame") && inherits(df2,"data.frame")) {
     if (!is.null(by)){
@@ -166,7 +174,6 @@ anti_join_ <- function(df,df2,by=NULL,by.x=NULL,by.y=NULL){
 ##########
 # MUTATE #
 ##########
-
 mutate_runner <- function(df, expr, return_full_df) {
   if (!inherits(df, "data.frame")) stop("argument 'df' is not of class data.frame")
   
@@ -221,14 +228,17 @@ mutate_runner <- function(df, expr, return_full_df) {
   }
 }
 
+#' @export
 mutate_ <- function(df,...) { mutate_runner(df, list(...), TRUE) }
+
+#' @export
 transmutate_ <- function(df,...) { mutate_runner(df, list(...), FALSE) }
 
 
 #################
 # GATHER/SPREAD #
 #################
-
+#' @export
 gather_ <- function(df, new_col_name = "parameters", new_col_values = "values", pivot){
   if (inherits(df,"data.frame")) {
     pivot_cols <- intersect(names(df), pivot)
@@ -253,6 +263,7 @@ gather_ <- function(df, new_col_name = "parameters", new_col_values = "values", 
   } else stop("argument 'df' is not of class data.frame")
 }
 
+#' @export
 spread_ <- function(df, col_name, col_values, pivot){
   if (inherits(df,"data.frame")) {
     
@@ -282,7 +293,7 @@ spread_ <- function(df, col_name, col_values, pivot){
 ##########
 # SELECT #
 ##########
-
+#' @export
 select_ <- function(df, variable=NULL){
   if (inherits(df,"data.frame")) {
     
@@ -319,7 +330,7 @@ select_j <- function(df,variable=NULL) {
 #############
 # SUMMARISE #
 #############
-
+#' @export
 summarise_ <- function(df, group_info = NULL, ...) {
   if (!inherits(df, "data.frame")) {
     stop("argument 'df' is not of class data.frame")
@@ -383,7 +394,7 @@ summarise_ <- function(df, group_info = NULL, ...) {
 #########
 # VALUE #
 #########
-
+#' @export
 value_ <- function(df, i, j){
   if (inherits(df, "data.frame")) {
     
@@ -404,6 +415,7 @@ value_ <- function(df, i, j){
   } else stop("argument 'df' is not of class data.frame")
 }
 
+#' @export
 `modify_<-` <- function(df, i, j, value) {
   if (inherits(df, "data.frame")) {
     

@@ -1,5 +1,4 @@
 \name{m61r-package}
-\alias{m61r}
 \alias{m61r-package}
 \docType{package}
 \title{High-Performance Data Manipulation with Pure Base R}
