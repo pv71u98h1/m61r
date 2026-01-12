@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -74,23 +74,89 @@ Properties:</p><ul><li><p>Columns are not modified.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">filter_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="va">Plant</span><span class="op">==</span><span class="st">"Qn1"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">filter_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="va">Type</span><span class="op">==</span><span class="st">"Quebec"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># with m61r class</span></span>
-<span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">co2</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="op">~</span><span class="va">Plant</span><span class="op">==</span><span class="st">"Qn1"</span><span class="op">)</span></span>
-<span><span class="va">co2</span></span>
-<span></span>
-<span><span class="va">co2</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="op">~</span><span class="va">Type</span><span class="op">==</span><span class="st">"Quebec"</span><span class="op">)</span></span>
-<span><span class="va">co2</span></span>
-<span></span>
-<span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">filter_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="va">Plant</span><span class="op">==</span><span class="st">"Qn1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plant   Type  Treatment conc uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Qn1 Quebec nonchilled   95   16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Qn1 Quebec nonchilled  175   30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Qn1 Quebec nonchilled  250   34.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Qn1 Quebec nonchilled  350   37.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Qn1 Quebec nonchilled  500   35.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Qn1 Quebec nonchilled  675   39.2</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">filter_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="va">Type</span><span class="op">==</span><span class="st">"Quebec"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plant   Type  Treatment conc uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Qn1 Quebec nonchilled   95   16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Qn1 Quebec nonchilled  175   30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Qn1 Quebec nonchilled  250   34.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Qn1 Quebec nonchilled  350   37.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Qn1 Quebec nonchilled  500   35.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Qn1 Quebec nonchilled  675   39.2</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># with m61r class</span></span></span>
+<span class="r-in"><span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">co2</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="op">~</span><span class="va">Plant</span><span class="op">==</span><span class="st">"Qn1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plant   Type  Treatment conc uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Qn1 Quebec nonchilled   95   16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Qn1 Quebec nonchilled  175   30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Qn1 Quebec nonchilled  250   34.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Qn1 Quebec nonchilled  350   37.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Qn1 Quebec nonchilled  500   35.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Qn1 Quebec nonchilled  675   39.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Qn1 Quebec nonchilled 1000   39.7</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">co2</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="op">~</span><span class="va">Type</span><span class="op">==</span><span class="st">"Quebec"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Plant   Type  Treatment conc uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Qn1 Quebec nonchilled   95   16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Qn1 Quebec nonchilled  175   30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    Qn1 Quebec nonchilled  250   34.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    Qn1 Quebec nonchilled  350   37.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    Qn1 Quebec nonchilled  500   35.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    Qn1 Quebec nonchilled  675   39.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    Qn1 Quebec nonchilled 1000   39.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    Qn2 Quebec nonchilled   95   13.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    Qn2 Quebec nonchilled  175   27.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   Qn2 Quebec nonchilled  250   37.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   Qn2 Quebec nonchilled  350   41.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Qn2 Quebec nonchilled  500   40.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13   Qn2 Quebec nonchilled  675   41.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14   Qn2 Quebec nonchilled 1000   44.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   Qn3 Quebec nonchilled   95   16.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   Qn3 Quebec nonchilled  175   32.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17   Qn3 Quebec nonchilled  250   40.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18   Qn3 Quebec nonchilled  350   42.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19   Qn3 Quebec nonchilled  500   42.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20   Qn3 Quebec nonchilled  675   43.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   Qn3 Quebec nonchilled 1000   45.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   Qc1 Quebec    chilled   95   14.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   Qc1 Quebec    chilled  175   24.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   Qc1 Quebec    chilled  250   30.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25   Qc1 Quebec    chilled  350   34.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26   Qc1 Quebec    chilled  500   32.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27   Qc1 Quebec    chilled  675   35.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28   Qc1 Quebec    chilled 1000   38.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29   Qc2 Quebec    chilled   95    9.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30   Qc2 Quebec    chilled  175   27.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31   Qc2 Quebec    chilled  250   35.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32   Qc2 Quebec    chilled  350   38.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33   Qc2 Quebec    chilled  500   38.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34   Qc2 Quebec    chilled  675   37.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35   Qc2 Quebec    chilled 1000   42.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36   Qc3 Quebec    chilled   95   15.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37   Qc3 Quebec    chilled  175   21.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38   Qc3 Quebec    chilled  250   38.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39   Qc3 Quebec    chilled  350   34.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40   Qc3 Quebec    chilled  500   38.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41   Qc3 Quebec    chilled  675   39.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42   Qc3 Quebec    chilled 1000   41.4</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

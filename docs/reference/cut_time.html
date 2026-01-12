@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -72,21 +72,25 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
-<span><span class="va">df_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  timestamp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2025-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"15 mins"</span>, length.out <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span>
-<span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df_time</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>day_bin <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="fu">cut_time</span><span class="op">(</span><span class="va">timestamp</span>, <span class="st">"day"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="fu">group_by</span><span class="op">(</span><span class="op">~</span><span class="va">day_bin</span><span class="op">)</span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="fu">summarise</span><span class="op">(</span>daily_avg <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  timestamp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2025-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"15 mins"</span>, length.out <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df_time</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>day_bin <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="fu">cut_time</span><span class="op">(</span><span class="va">timestamp</span>, <span class="st">"day"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span><span class="op">$</span><span class="fu">group_by</span><span class="op">(</span><span class="op">~</span><span class="va">day_bin</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span><span class="op">$</span><span class="fu">summarise</span><span class="op">(</span>daily_avg <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      day_bin  daily_avg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2025-01-01  0.1006012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2025-01-02 -1.0984966</span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

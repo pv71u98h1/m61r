@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -71,32 +71,46 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,</span>
-<span>  tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># This will result in 2 rows for id 1 and 3 rows for id 2</span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="fu">explode</span><span class="op">(</span><span class="st">"tags"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span></span>
-<span></span>
-<span><span class="co"># Time-Series Example</span></span>
-<span><span class="va">df_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  id <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2025-01-01 08:00"</span><span class="op">)</span>,</span>
-<span>  end   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2025-01-01 13:00"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df_time</span><span class="op">)</span></span>
-<span><span class="co"># Create a sequence of hours</span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>hour_slot <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">s</span>, <span class="va">e</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">e</span>, by <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span>, <span class="va">start</span>, <span class="va">end</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># Explode to get one row per hour</span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="fu">explode</span><span class="op">(</span><span class="st">"hour_slot"</span><span class="op">)</span></span>
-<span><span class="va">tmp</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># This will result in 2 rows for id 1 and 3 rows for id 2</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span><span class="op">$</span><span class="fu">explode</span><span class="op">(</span><span class="st">"tags"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id tags</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1    A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1    B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  2    C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2    D</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  2    E</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Time-Series Example</span></span></span>
+<span class="r-in"><span><span class="va">df_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  id <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2025-01-01 08:00"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  end   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2025-01-01 13:00"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df_time</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Create a sequence of hours</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>hour_slot <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">s</span>, <span class="va">e</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">e</span>, by <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span>, <span class="va">start</span>, <span class="va">end</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Explode to get one row per hour</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span><span class="op">$</span><span class="fu">explode</span><span class="op">(</span><span class="st">"hour_slot"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id               start                 end           hour_slot</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1 2025-01-01 08:00:00 2025-01-01 13:00:00 2025-01-01 08:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1 2025-01-01 08:00:00 2025-01-01 13:00:00 2025-01-01 09:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1 2025-01-01 08:00:00 2025-01-01 13:00:00 2025-01-01 10:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1 2025-01-01 08:00:00 2025-01-01 13:00:00 2025-01-01 11:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1 2025-01-01 08:00:00 2025-01-01 13:00:00 2025-01-01 12:00:00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1 2025-01-01 08:00:00 2025-01-01 13:00:00 2025-01-01 13:00:00</span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

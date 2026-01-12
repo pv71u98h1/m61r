@@ -19,13 +19,13 @@ The package got highly inspired by modern data manipulation packages, while excl
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -57,7 +57,7 @@ The package got highly inspired by modern data manipulation packages, while excl
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The core of <code>m61r</code> is the Base R Data Manipulation Grammar, implemented through two layers:</p>
 <ul><li><p><strong>Primitives (e.g., <code>filter_</code>, <code>arrange_</code>):</strong> These are the raw, optimized functions operating directly on Base R <code>data.frame</code> objects. They are designed for maximum computational efficiency.</p></li>
-<li><p><strong><code>m61r</code> Object (<code>m61r()</code> constructor):</strong> This S3 class provides a pipeline interface, allowing a sequence of operations (e.g., <code>$filter()</code>, <code>$mutate()</code>) to be chained cleanly.</p></li>
+<li><p><strong><code>m61r</code> Object (<code><a href="m61r_class.html">m61r()</a></code> constructor):</strong> This S3 class provides a pipeline interface, allowing a sequence of operations (e.g., <code>$filter()</code>, <code>$mutate()</code>) to be chained cleanly.</p></li>
 </ul><p><strong>The Base R Formula DSL:</strong>
 All manipulation functions (like <code>filter</code>, <code>mutate</code>, <code>group_by</code>, <code>select</code>, <code>summarise</code>) utilise a formula syntax (<code>~&lt;expression&gt;</code>). This ensures Non-Standard Evaluation (NSE) can access column names directly within the context of the data frame.</p>
 <p><strong>Date and Time Handling:</strong>

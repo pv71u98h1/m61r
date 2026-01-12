@@ -29,14 +29,14 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -62,7 +62,7 @@
       <h1>Temporal Data Manipulation with m61r</h1>
                         <h4 data-toc-skip class="author">pv71u98h1</h4>
             
-            <h4 data-toc-skip class="date">2026-01-08</h4>
+            <h4 data-toc-skip class="date">2026-01-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pv71u98h1/m61r/blob/HEAD/vignettes/m61r_temporal.Rmd" class="external-link"><code>vignettes/m61r_temporal.Rmd</code></a></small>
       <div class="d-none name"><code>m61r_temporal.Rmd</code></div>
@@ -151,7 +151,7 @@
 <span>  timestamp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-01-01 10:00:00"</span>, <span class="st">"2023-01-01 11:30:00"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">raw_data</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">raw_data</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span></span>
 <span>  year  <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">timestamp</span>, <span class="st">"%Y"</span><span class="op">)</span>,</span>
@@ -174,7 +174,7 @@
 <span>  load  <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df_intervals</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df_intervals</span><span class="op">)</span></span>
 <span><span class="va">p</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>slot <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">s</span>, <span class="va">e</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">e</span>, by <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span>, <span class="va">start</span>, <span class="va">end</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -201,7 +201,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df_sync</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2025-01-01 09:30"</span><span class="op">)</span>, event <span class="op">=</span> <span class="st">"Trade"</span><span class="op">)</span></span>
-<span><span class="va">p_sync</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df_sync</span><span class="op">)</span></span>
+<span><span class="va">p_sync</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df_sync</span><span class="op">)</span></span>
 <span><span class="va">p_sync</span><span class="op">$</span><span class="fu">join_asof</span><span class="op">(</span><span class="va">prices</span>, by_x <span class="op">=</span> <span class="st">"ts"</span>, by_y <span class="op">=</span> <span class="st">"ts"</span>, direction <span class="op">=</span> <span class="st">"backward"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -215,7 +215,7 @@
 <span>  exit  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-06-01"</span>, <span class="st">"2021-06-01"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p_dates</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df_dates</span><span class="op">)</span></span>
+<span><span class="va">p_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df_dates</span><span class="op">)</span></span>
 <span><span class="va">p_dates</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>year <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXlt</a></span><span class="op">(</span><span class="va">entry</span><span class="op">)</span><span class="op">$</span><span class="va">year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span></span>
 <span><span class="va">p_dates</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   id      entry       exit year</span></span>
@@ -237,7 +237,7 @@
 <span>  consumption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">500</span>, <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p_agg</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">ts_data</span><span class="op">)</span></span>
+<span><span class="va">p_agg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">ts_data</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_agg</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>hour_bin <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">time</span>, <span class="st">"%Y-%m-%d %H:00"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p_agg</span><span class="op">$</span><span class="fu">group_by</span><span class="op">(</span><span class="op">~</span><span class="va">hour_bin</span><span class="op">)</span></span>

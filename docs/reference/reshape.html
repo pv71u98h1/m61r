@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -96,54 +96,95 @@ For 'wide' columns, each row corresponds to values present in column determined 
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
-<span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
-<span>                    age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">50</span>,<span class="fl">60</span>,<span class="fl">50</span><span class="op">)</span>,</span>
-<span>                    dose.a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span>
-<span>                    dose.a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span>                    dose.a14 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">gather_</span><span class="op">(</span><span class="va">df3</span>,pivot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu">gather_</span><span class="op">(</span><span class="va">df3</span>,pivot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">df5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">df4</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">5</span>, age<span class="op">=</span><span class="fl">20</span>,parameters<span class="op">=</span><span class="st">"dose.a14"</span>,values<span class="op">=</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">6</span>, age<span class="op">=</span><span class="fl">10</span>,parameters<span class="op">=</span><span class="st">"dose.a1"</span>,values<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">spread_</span><span class="op">(</span><span class="va">df5</span>,col_name<span class="op">=</span><span class="st">"parameters"</span>,col_values<span class="op">=</span><span class="st">"values"</span>,pivot<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span> <span class="co"># with m61r class</span></span>
-<span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## gather</span></span>
-<span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
-<span>                age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">50</span>,<span class="fl">60</span>,<span class="fl">50</span><span class="op">)</span>,</span>
-<span>                dose.a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span>
-<span>                dose.a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span>                dose.a14 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df3</span><span class="op">)</span></span>
-<span><span class="va">df4</span><span class="op">$</span><span class="fu">gather</span><span class="op">(</span>pivot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">df4</span></span>
-<span></span>
-<span><span class="co">## spread</span></span>
-<span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
-<span>                age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">50</span>,<span class="fl">60</span>,<span class="fl">50</span><span class="op">)</span>,</span>
-<span>                dose.a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span>
-<span>                dose.a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span>                dose.a14 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu">gather_</span><span class="op">(</span><span class="va">df3</span>,pivot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">df4</span>,</span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">5</span>, age<span class="op">=</span><span class="fl">20</span>,parameters<span class="op">=</span><span class="st">"dose.a14"</span>,values<span class="op">=</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">6</span>, age<span class="op">=</span><span class="fl">10</span>,parameters<span class="op">=</span><span class="st">"dose.a1"</span>,values<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df4</span><span class="op">)</span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="fu">spread</span><span class="op">(</span>col_name<span class="op">=</span><span class="st">"parameters"</span>,col_values<span class="op">=</span><span class="st">"values"</span>,pivot<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">tmp</span></span>
-<span></span>
-<span></span>
-<span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                    age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">50</span>,<span class="fl">60</span>,<span class="fl">50</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    dose.a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    dose.a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    dose.a14 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">gather_</span><span class="op">(</span><span class="va">df3</span>,pivot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id age parameters values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1  40    dose.a1      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2  50    dose.a1      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   3  60    dose.a1      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   4  50    dose.a1      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1  40    dose.a2      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2  50    dose.a2      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   3  60    dose.a2      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   4  50    dose.a2      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   1  40   dose.a14      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2  50   dose.a14      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  3  60   dose.a14      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  4  50   dose.a14      3</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu">gather_</span><span class="op">(</span><span class="va">df3</span>,pivot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">df4</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">5</span>, age<span class="op">=</span><span class="fl">20</span>,parameters<span class="op">=</span><span class="st">"dose.a14"</span>,values<span class="op">=</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">6</span>, age<span class="op">=</span><span class="fl">10</span>,parameters<span class="op">=</span><span class="st">"dose.a1"</span>,values<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">spread_</span><span class="op">(</span><span class="va">df5</span>,col_name<span class="op">=</span><span class="st">"parameters"</span>,col_values<span class="op">=</span><span class="st">"values"</span>,pivot<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id age dose.a1 dose.a2 dose.a14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1  40       1       2        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2  50       2       1        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   3  60       1       2        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   4  50       2       1        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  5  20      NA      NA        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  6  10       5      NA       NA</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span> <span class="co"># with m61r class</span></span></span>
+<span class="r-in"><span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## gather</span></span></span>
+<span class="r-in"><span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">50</span>,<span class="fl">60</span>,<span class="fl">50</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                dose.a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                dose.a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                dose.a14 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df4</span><span class="op">$</span><span class="fu">gather</span><span class="op">(</span>pivot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df4</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id age parameters values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1  40    dose.a1      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2  50    dose.a1      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   3  60    dose.a1      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   4  50    dose.a1      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1  40    dose.a2      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2  50    dose.a2      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   3  60    dose.a2      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   4  50    dose.a2      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   1  40   dose.a14      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2  50   dose.a14      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  3  60   dose.a14      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  4  50   dose.a14      3</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## spread</span></span></span>
+<span class="r-in"><span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>,<span class="fl">50</span>,<span class="fl">60</span>,<span class="fl">50</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                dose.a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                dose.a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                dose.a14 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu">gather_</span><span class="op">(</span><span class="va">df3</span>,pivot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">df4</span>,</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">5</span>, age<span class="op">=</span><span class="fl">20</span>,parameters<span class="op">=</span><span class="st">"dose.a14"</span>,values<span class="op">=</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id<span class="op">=</span><span class="fl">6</span>, age<span class="op">=</span><span class="fl">10</span>,parameters<span class="op">=</span><span class="st">"dose.a1"</span>,values<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span><span class="op">$</span><span class="fu">spread</span><span class="op">(</span>col_name<span class="op">=</span><span class="st">"parameters"</span>,col_values<span class="op">=</span><span class="st">"values"</span>,pivot<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id age dose.a1 dose.a2 dose.a14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1  40       1       2        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2  50       2       1        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   3  60       1       2        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   4  50       2       1        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  5  20      NA      NA        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  6  10       5      NA       NA</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

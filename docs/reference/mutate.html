@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -78,36 +78,313 @@ In addition, new columns are created according to argument <code>...</code> and 
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">mutate_</span><span class="op">(</span><span class="va">CO2</span>,z<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="va">uptake</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Return an warning: expression mean(uptake) get a result with 'nrow' different from 'df'</span></span>
-<span><span class="co"># tmp &lt;- mutate_(CO2,mean=~mean(uptake))</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">mutate_</span><span class="op">(</span><span class="va">CO2</span>,z1<span class="op">=</span><span class="op">~</span><span class="va">uptake</span><span class="op">/</span><span class="va">conc</span>,y<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">transmutate_</span><span class="op">(</span><span class="va">CO2</span>,z2<span class="op">=</span><span class="op">~</span><span class="va">uptake</span><span class="op">/</span><span class="va">conc</span>,y2<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># with m61r class</span></span>
-<span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">co2</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>z<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="va">uptake</span><span class="op">)</span></span>
-<span><span class="va">co2</span></span>
-<span></span>
-<span><span class="co"># not allowed</span></span>
-<span><span class="co">#co2$mutate(mean=~mean(uptake))</span></span>
-<span><span class="co">#co2</span></span>
-<span><span class="co">#Warning message:</span></span>
-<span><span class="co">#In FUN(X[[i]], ...) : Expression mean has incompatible length.</span></span>
-<span></span>
-<span><span class="va">co2</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>z1<span class="op">=</span><span class="op">~</span><span class="va">uptake</span><span class="op">/</span><span class="va">conc</span>,y<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">co2</span></span>
-<span></span>
-<span><span class="va">co2</span><span class="op">$</span><span class="fu">transmutate</span><span class="op">(</span>z2<span class="op">=</span><span class="op">~</span><span class="va">uptake</span><span class="op">/</span><span class="va">conc</span>,y2<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">co2</span></span>
-<span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">mutate_</span><span class="op">(</span><span class="va">CO2</span>,z<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="va">uptake</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plant   Type  Treatment conc uptake         z</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Qn1 Quebec nonchilled   95   16.0  5.937500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Qn1 Quebec nonchilled  175   30.4  5.756579</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Qn1 Quebec nonchilled  250   34.8  7.183908</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Qn1 Quebec nonchilled  350   37.2  9.408602</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Qn1 Quebec nonchilled  500   35.3 14.164306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Qn1 Quebec nonchilled  675   39.2 17.219388</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Return an warning: expression mean(uptake) get a result with 'nrow' different from 'df'</span></span></span>
+<span class="r-in"><span><span class="co"># tmp &lt;- mutate_(CO2,mean=~mean(uptake))</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">mutate_</span><span class="op">(</span><span class="va">CO2</span>,z1<span class="op">=</span><span class="op">~</span><span class="va">uptake</span><span class="op">/</span><span class="va">conc</span>,y<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plant   Type  Treatment conc uptake         z1    y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Qn1 Quebec nonchilled   95   16.0 0.16842105 0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Qn1 Quebec nonchilled  175   30.4 0.17371429 1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Qn1 Quebec nonchilled  250   34.8 0.13920000 2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Qn1 Quebec nonchilled  350   37.2 0.10628571 3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Qn1 Quebec nonchilled  500   35.3 0.07060000 5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Qn1 Quebec nonchilled  675   39.2 0.05807407 6.75</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">transmutate_</span><span class="op">(</span><span class="va">CO2</span>,z2<span class="op">=</span><span class="op">~</span><span class="va">uptake</span><span class="op">/</span><span class="va">conc</span>,y2<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           z2   y2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.16842105 0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.17371429 1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.13920000 2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.10628571 3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.07060000 5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05807407 6.75</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># with m61r class</span></span></span>
+<span class="r-in"><span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">co2</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>z<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="va">uptake</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Plant        Type  Treatment conc uptake         z</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Qn1      Quebec nonchilled   95   16.0  5.937500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Qn1      Quebec nonchilled  175   30.4  5.756579</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    Qn1      Quebec nonchilled  250   34.8  7.183908</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    Qn1      Quebec nonchilled  350   37.2  9.408602</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    Qn1      Quebec nonchilled  500   35.3 14.164306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    Qn1      Quebec nonchilled  675   39.2 17.219388</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    Qn1      Quebec nonchilled 1000   39.7 25.188917</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    Qn2      Quebec nonchilled   95   13.6  6.985294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    Qn2      Quebec nonchilled  175   27.3  6.410256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   Qn2      Quebec nonchilled  250   37.1  6.738544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   Qn2      Quebec nonchilled  350   41.8  8.373206</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Qn2      Quebec nonchilled  500   40.6 12.315271</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13   Qn2      Quebec nonchilled  675   41.4 16.304348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14   Qn2      Quebec nonchilled 1000   44.3 22.573363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   Qn3      Quebec nonchilled   95   16.2  5.864198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   Qn3      Quebec nonchilled  175   32.4  5.401235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17   Qn3      Quebec nonchilled  250   40.3  6.203474</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18   Qn3      Quebec nonchilled  350   42.1  8.313539</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19   Qn3      Quebec nonchilled  500   42.9 11.655012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20   Qn3      Quebec nonchilled  675   43.9 15.375854</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   Qn3      Quebec nonchilled 1000   45.5 21.978022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   Qc1      Quebec    chilled   95   14.2  6.690141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   Qc1      Quebec    chilled  175   24.1  7.261411</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   Qc1      Quebec    chilled  250   30.3  8.250825</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25   Qc1      Quebec    chilled  350   34.6 10.115607</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26   Qc1      Quebec    chilled  500   32.5 15.384615</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27   Qc1      Quebec    chilled  675   35.4 19.067797</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28   Qc1      Quebec    chilled 1000   38.7 25.839793</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29   Qc2      Quebec    chilled   95    9.3 10.215054</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30   Qc2      Quebec    chilled  175   27.3  6.410256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31   Qc2      Quebec    chilled  250   35.0  7.142857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32   Qc2      Quebec    chilled  350   38.8  9.020619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33   Qc2      Quebec    chilled  500   38.6 12.953368</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34   Qc2      Quebec    chilled  675   37.5 18.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35   Qc2      Quebec    chilled 1000   42.4 23.584906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36   Qc3      Quebec    chilled   95   15.1  6.291391</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37   Qc3      Quebec    chilled  175   21.0  8.333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38   Qc3      Quebec    chilled  250   38.1  6.561680</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39   Qc3      Quebec    chilled  350   34.0 10.294118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40   Qc3      Quebec    chilled  500   38.9 12.853470</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41   Qc3      Quebec    chilled  675   39.6 17.045455</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42   Qc3      Quebec    chilled 1000   41.4 24.154589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43   Mn1 Mississippi nonchilled   95   10.6  8.962264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44   Mn1 Mississippi nonchilled  175   19.2  9.114583</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45   Mn1 Mississippi nonchilled  250   26.2  9.541985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46   Mn1 Mississippi nonchilled  350   30.0 11.666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47   Mn1 Mississippi nonchilled  500   30.9 16.181230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48   Mn1 Mississippi nonchilled  675   32.4 20.833333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49   Mn1 Mississippi nonchilled 1000   35.5 28.169014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50   Mn2 Mississippi nonchilled   95   12.0  7.916667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51   Mn2 Mississippi nonchilled  175   22.0  7.954545</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52   Mn2 Mississippi nonchilled  250   30.6  8.169935</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53   Mn2 Mississippi nonchilled  350   31.8 11.006289</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54   Mn2 Mississippi nonchilled  500   32.4 15.432099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55   Mn2 Mississippi nonchilled  675   31.1 21.704180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56   Mn2 Mississippi nonchilled 1000   31.5 31.746032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57   Mn3 Mississippi nonchilled   95   11.3  8.407080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58   Mn3 Mississippi nonchilled  175   19.4  9.020619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59   Mn3 Mississippi nonchilled  250   25.8  9.689922</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60   Mn3 Mississippi nonchilled  350   27.9 12.544803</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61   Mn3 Mississippi nonchilled  500   28.5 17.543860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62   Mn3 Mississippi nonchilled  675   28.1 24.021352</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63   Mn3 Mississippi nonchilled 1000   27.8 35.971223</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64   Mc1 Mississippi    chilled   95   10.5  9.047619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65   Mc1 Mississippi    chilled  175   14.9 11.744966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66   Mc1 Mississippi    chilled  250   18.1 13.812155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67   Mc1 Mississippi    chilled  350   18.9 18.518519</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68   Mc1 Mississippi    chilled  500   19.5 25.641026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69   Mc1 Mississippi    chilled  675   22.2 30.405405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70   Mc1 Mississippi    chilled 1000   21.9 45.662100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71   Mc2 Mississippi    chilled   95    7.7 12.337662</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72   Mc2 Mississippi    chilled  175   11.4 15.350877</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73   Mc2 Mississippi    chilled  250   12.3 20.325203</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74   Mc2 Mississippi    chilled  350   13.0 26.923077</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75   Mc2 Mississippi    chilled  500   12.5 40.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76   Mc2 Mississippi    chilled  675   13.7 49.270073</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77   Mc2 Mississippi    chilled 1000   14.4 69.444444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78   Mc3 Mississippi    chilled   95   10.6  8.962264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79   Mc3 Mississippi    chilled  175   18.0  9.722222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80   Mc3 Mississippi    chilled  250   17.9 13.966480</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81   Mc3 Mississippi    chilled  350   17.9 19.553073</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82   Mc3 Mississippi    chilled  500   17.9 27.932961</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83   Mc3 Mississippi    chilled  675   18.9 35.714286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84   Mc3 Mississippi    chilled 1000   19.9 50.251256</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># not allowed</span></span></span>
+<span class="r-in"><span><span class="co">#co2$mutate(mean=~mean(uptake))</span></span></span>
+<span class="r-in"><span><span class="co">#co2</span></span></span>
+<span class="r-in"><span><span class="co">#Warning message:</span></span></span>
+<span class="r-in"><span><span class="co">#In FUN(X[[i]], ...) : Expression mean has incompatible length.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">co2</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span>z1<span class="op">=</span><span class="op">~</span><span class="va">uptake</span><span class="op">/</span><span class="va">conc</span>,y<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Plant        Type  Treatment conc uptake         z1     y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Qn1      Quebec nonchilled   95   16.0 0.16842105  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Qn1      Quebec nonchilled  175   30.4 0.17371429  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    Qn1      Quebec nonchilled  250   34.8 0.13920000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    Qn1      Quebec nonchilled  350   37.2 0.10628571  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    Qn1      Quebec nonchilled  500   35.3 0.07060000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    Qn1      Quebec nonchilled  675   39.2 0.05807407  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    Qn1      Quebec nonchilled 1000   39.7 0.03970000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    Qn2      Quebec nonchilled   95   13.6 0.14315789  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    Qn2      Quebec nonchilled  175   27.3 0.15600000  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   Qn2      Quebec nonchilled  250   37.1 0.14840000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   Qn2      Quebec nonchilled  350   41.8 0.11942857  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Qn2      Quebec nonchilled  500   40.6 0.08120000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13   Qn2      Quebec nonchilled  675   41.4 0.06133333  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14   Qn2      Quebec nonchilled 1000   44.3 0.04430000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   Qn3      Quebec nonchilled   95   16.2 0.17052632  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   Qn3      Quebec nonchilled  175   32.4 0.18514286  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17   Qn3      Quebec nonchilled  250   40.3 0.16120000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18   Qn3      Quebec nonchilled  350   42.1 0.12028571  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19   Qn3      Quebec nonchilled  500   42.9 0.08580000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20   Qn3      Quebec nonchilled  675   43.9 0.06503704  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   Qn3      Quebec nonchilled 1000   45.5 0.04550000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   Qc1      Quebec    chilled   95   14.2 0.14947368  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   Qc1      Quebec    chilled  175   24.1 0.13771429  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   Qc1      Quebec    chilled  250   30.3 0.12120000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25   Qc1      Quebec    chilled  350   34.6 0.09885714  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26   Qc1      Quebec    chilled  500   32.5 0.06500000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27   Qc1      Quebec    chilled  675   35.4 0.05244444  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28   Qc1      Quebec    chilled 1000   38.7 0.03870000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29   Qc2      Quebec    chilled   95    9.3 0.09789474  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30   Qc2      Quebec    chilled  175   27.3 0.15600000  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31   Qc2      Quebec    chilled  250   35.0 0.14000000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32   Qc2      Quebec    chilled  350   38.8 0.11085714  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33   Qc2      Quebec    chilled  500   38.6 0.07720000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34   Qc2      Quebec    chilled  675   37.5 0.05555556  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35   Qc2      Quebec    chilled 1000   42.4 0.04240000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36   Qc3      Quebec    chilled   95   15.1 0.15894737  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37   Qc3      Quebec    chilled  175   21.0 0.12000000  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38   Qc3      Quebec    chilled  250   38.1 0.15240000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39   Qc3      Quebec    chilled  350   34.0 0.09714286  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40   Qc3      Quebec    chilled  500   38.9 0.07780000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41   Qc3      Quebec    chilled  675   39.6 0.05866667  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42   Qc3      Quebec    chilled 1000   41.4 0.04140000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43   Mn1 Mississippi nonchilled   95   10.6 0.11157895  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44   Mn1 Mississippi nonchilled  175   19.2 0.10971429  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45   Mn1 Mississippi nonchilled  250   26.2 0.10480000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46   Mn1 Mississippi nonchilled  350   30.0 0.08571429  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47   Mn1 Mississippi nonchilled  500   30.9 0.06180000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48   Mn1 Mississippi nonchilled  675   32.4 0.04800000  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49   Mn1 Mississippi nonchilled 1000   35.5 0.03550000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50   Mn2 Mississippi nonchilled   95   12.0 0.12631579  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51   Mn2 Mississippi nonchilled  175   22.0 0.12571429  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52   Mn2 Mississippi nonchilled  250   30.6 0.12240000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53   Mn2 Mississippi nonchilled  350   31.8 0.09085714  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54   Mn2 Mississippi nonchilled  500   32.4 0.06480000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55   Mn2 Mississippi nonchilled  675   31.1 0.04607407  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56   Mn2 Mississippi nonchilled 1000   31.5 0.03150000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57   Mn3 Mississippi nonchilled   95   11.3 0.11894737  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58   Mn3 Mississippi nonchilled  175   19.4 0.11085714  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59   Mn3 Mississippi nonchilled  250   25.8 0.10320000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60   Mn3 Mississippi nonchilled  350   27.9 0.07971429  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61   Mn3 Mississippi nonchilled  500   28.5 0.05700000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62   Mn3 Mississippi nonchilled  675   28.1 0.04162963  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63   Mn3 Mississippi nonchilled 1000   27.8 0.02780000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64   Mc1 Mississippi    chilled   95   10.5 0.11052632  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65   Mc1 Mississippi    chilled  175   14.9 0.08514286  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66   Mc1 Mississippi    chilled  250   18.1 0.07240000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67   Mc1 Mississippi    chilled  350   18.9 0.05400000  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68   Mc1 Mississippi    chilled  500   19.5 0.03900000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69   Mc1 Mississippi    chilled  675   22.2 0.03288889  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70   Mc1 Mississippi    chilled 1000   21.9 0.02190000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71   Mc2 Mississippi    chilled   95    7.7 0.08105263  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72   Mc2 Mississippi    chilled  175   11.4 0.06514286  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73   Mc2 Mississippi    chilled  250   12.3 0.04920000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74   Mc2 Mississippi    chilled  350   13.0 0.03714286  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75   Mc2 Mississippi    chilled  500   12.5 0.02500000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76   Mc2 Mississippi    chilled  675   13.7 0.02029630  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77   Mc2 Mississippi    chilled 1000   14.4 0.01440000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78   Mc3 Mississippi    chilled   95   10.6 0.11157895  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79   Mc3 Mississippi    chilled  175   18.0 0.10285714  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80   Mc3 Mississippi    chilled  250   17.9 0.07160000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81   Mc3 Mississippi    chilled  350   17.9 0.05114286  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82   Mc3 Mississippi    chilled  500   17.9 0.03580000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83   Mc3 Mississippi    chilled  675   18.9 0.02800000  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84   Mc3 Mississippi    chilled 1000   19.9 0.01990000 10.00</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">co2</span><span class="op">$</span><span class="fu">transmutate</span><span class="op">(</span>z2<span class="op">=</span><span class="op">~</span><span class="va">uptake</span><span class="op">/</span><span class="va">conc</span>,y2<span class="op">=</span><span class="op">~</span><span class="va">conc</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            z2    y2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.16842105  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.17371429  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.13920000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.10628571  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  0.07060000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  0.05807407  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  0.03970000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  0.14315789  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.15600000  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 0.14840000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 0.11942857  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 0.08120000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 0.06133333  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 0.04430000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 0.17052632  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 0.18514286  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 0.16120000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 0.12028571  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 0.08580000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 0.06503704  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 0.04550000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 0.14947368  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 0.13771429  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 0.12120000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 0.09885714  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 0.06500000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 0.05244444  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 0.03870000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 0.09789474  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 0.15600000  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31 0.14000000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 0.11085714  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33 0.07720000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34 0.05555556  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35 0.04240000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36 0.15894737  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37 0.12000000  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38 0.15240000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39 0.09714286  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 0.07780000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41 0.05866667  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42 0.04140000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43 0.11157895  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44 0.10971429  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45 0.10480000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46 0.08571429  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47 0.06180000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48 0.04800000  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49 0.03550000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50 0.12631579  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51 0.12571429  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52 0.12240000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53 0.09085714  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54 0.06480000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55 0.04607407  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56 0.03150000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57 0.11894737  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58 0.11085714  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59 0.10320000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60 0.07971429  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61 0.05700000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62 0.04162963  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63 0.02780000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64 0.11052632  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65 0.08514286  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66 0.07240000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67 0.05400000  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68 0.03900000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69 0.03288889  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70 0.02190000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71 0.08105263  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72 0.06514286  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73 0.04920000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74 0.03714286  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75 0.02500000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76 0.02029630  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77 0.01440000 10.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78 0.11157895  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79 0.10285714  1.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80 0.07160000  2.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81 0.05114286  3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82 0.03580000  5.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83 0.02800000  6.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84 0.01990000 10.00</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

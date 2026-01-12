@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -97,81 +97,163 @@ For <code><a href="m61r_class.html">anti_join()</a></code>, a subset of <code>df
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
-<span><span class="va">books</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>             name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tukey"</span>, <span class="st">"Venables"</span>, <span class="st">"Tierney"</span>,<span class="st">"Ripley"</span>,</span>
-<span>                   <span class="st">"Ripley"</span>, <span class="st">"McNeil"</span>, <span class="st">"R Core"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>             title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Exploratory Data Analysis"</span>,</span>
-<span>                   <span class="st">"Modern Applied Statistics ..."</span>,</span>
-<span>                   <span class="st">"LISP-STAT"</span>,</span>
-<span>                   <span class="st">"Spatial Statistics"</span>, <span class="st">"Stochastic Simulation"</span>,</span>
-<span>                   <span class="st">"Interactive Data Analysis"</span>,</span>
-<span>                   <span class="st">"An Introduction to R"</span><span class="op">)</span>,</span>
-<span>              other.author <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"Ripley"</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>,<span class="st">"Venables &amp; Smith"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">authors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>               surname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tukey"</span>, <span class="st">"Venables"</span>, <span class="st">"Tierney"</span>, <span class="st">"Ripley"</span>, <span class="st">"McNeil"</span>,<span class="st">"Asimov"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>               nationality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"US"</span>, <span class="st">"Australia"</span>, <span class="st">"US"</span>, <span class="st">"UK"</span>, <span class="st">"Australia"</span>,<span class="st">"US"</span><span class="op">)</span>,</span>
-<span>               deceased <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="fl">4</span><span class="op">)</span>,<span class="st">"yes"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">left_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">inner_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">full_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">right_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">semi_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">anti_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span>  <span class="co"># with m61r class</span></span>
-<span>  </span>
-<span>  <span class="co">## inner join</span></span>
-<span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span>df<span class="op">=</span><span class="va">authors</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">inner_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
-<span>  <span class="va">tmp</span></span>
-<span></span>
-<span>  <span class="co">## left join</span></span>
-<span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">left_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
-<span>  <span class="va">tmp</span></span>
-<span></span>
-<span>  <span class="co">## right join</span></span>
-<span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">right_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
-<span>  <span class="va">tmp</span></span>
-<span></span>
-<span>  <span class="co">## full join</span></span>
-<span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">full_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
-<span>  <span class="va">tmp</span></span>
-<span></span>
-<span>  <span class="co">## semi join</span></span>
-<span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">semi_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
-<span>  <span class="va">tmp</span></span>
-<span></span>
-<span>  <span class="co">## anti join #1</span></span>
-<span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">anti_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span>
-<span>  <span class="va">tmp</span></span>
-<span></span>
-<span>  <span class="co">## anti join #2</span></span>
-<span>  <span class="va">tmp2</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span>df<span class="op">=</span><span class="va">books</span><span class="op">)</span></span>
-<span>  <span class="va">tmp2</span><span class="op">$</span><span class="fu">anti_join</span><span class="op">(</span><span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span>
-<span>  <span class="va">tmp2</span></span>
-<span></span>
-<span>  <span class="co">## with two m61r objects</span></span>
-<span>  <span class="va">tmp1</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">books</span><span class="op">)</span></span>
-<span>  <span class="va">tmp2</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">authors</span><span class="op">)</span></span>
-<span>  <span class="va">tmp3</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">anti_join</a></span><span class="op">(</span><span class="va">tmp1</span>,<span class="va">tmp2</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span>
-<span>  <span class="va">tmp3</span></span>
-<span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">books</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>             name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tukey"</span>, <span class="st">"Venables"</span>, <span class="st">"Tierney"</span>,<span class="st">"Ripley"</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"Ripley"</span>, <span class="st">"McNeil"</span>, <span class="st">"R Core"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Exploratory Data Analysis"</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"Modern Applied Statistics ..."</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"LISP-STAT"</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"Spatial Statistics"</span>, <span class="st">"Stochastic Simulation"</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"Interactive Data Analysis"</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"An Introduction to R"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>              other.author <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"Ripley"</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>,<span class="st">"Venables &amp; Smith"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">authors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>               surname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tukey"</span>, <span class="st">"Venables"</span>, <span class="st">"Tierney"</span>, <span class="st">"Ripley"</span>, <span class="st">"McNeil"</span>,<span class="st">"Asimov"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>               nationality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"US"</span>, <span class="st">"Australia"</span>, <span class="st">"US"</span>, <span class="st">"UK"</span>, <span class="st">"Australia"</span>,<span class="st">"US"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>               deceased <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yes"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="fl">4</span><span class="op">)</span>,<span class="st">"yes"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">left_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       name                         title other.author nationality deceased</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey     Exploratory Data Analysis         &lt;NA&gt;          US      yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables Modern Applied Statistics ...       Ripley   Australia       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney                     LISP-STAT         &lt;NA&gt;          US       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley            Spatial Statistics         &lt;NA&gt;          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley         Stochastic Simulation         &lt;NA&gt;          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil     Interactive Data Analysis         &lt;NA&gt;   Australia       no</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">inner_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       name                         title other.author nationality deceased</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey     Exploratory Data Analysis         &lt;NA&gt;          US      yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables Modern Applied Statistics ...       Ripley   Australia       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney                     LISP-STAT         &lt;NA&gt;          US       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley            Spatial Statistics         &lt;NA&gt;          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley         Stochastic Simulation         &lt;NA&gt;          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil     Interactive Data Analysis         &lt;NA&gt;   Australia       no</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">full_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       name                         title other.author nationality deceased</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey     Exploratory Data Analysis         &lt;NA&gt;          US      yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables Modern Applied Statistics ...       Ripley   Australia       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney                     LISP-STAT         &lt;NA&gt;          US       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley            Spatial Statistics         &lt;NA&gt;          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley         Stochastic Simulation         &lt;NA&gt;          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil     Interactive Data Analysis         &lt;NA&gt;   Australia       no</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">right_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       name                         title other.author nationality deceased</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey     Exploratory Data Analysis         &lt;NA&gt;          US      yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables Modern Applied Statistics ...       Ripley   Australia       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney                     LISP-STAT         &lt;NA&gt;          US       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley            Spatial Statistics         &lt;NA&gt;          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley         Stochastic Simulation         &lt;NA&gt;          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil     Interactive Data Analysis         &lt;NA&gt;   Australia       no</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">semi_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       name                         title other.author</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey     Exploratory Data Analysis         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables Modern Applied Statistics ...       Ripley</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney                     LISP-STAT         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley            Spatial Statistics         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley         Stochastic Simulation         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil     Interactive Data Analysis         &lt;NA&gt;</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">anti_join_</span><span class="op">(</span><span class="va">books</span>,<span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     name                title     other.author</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 R Core An Introduction to R Venables &amp; Smith</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># with m61r class</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="co">## inner join</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">authors</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">inner_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    surname nationality deceased                         title other.author</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey          US      yes     Exploratory Data Analysis         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables   Australia       no Modern Applied Statistics ...       Ripley</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney          US       no                     LISP-STAT         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley          UK       no            Spatial Statistics         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley          UK       no         Stochastic Simulation         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil   Australia       no     Interactive Data Analysis         &lt;NA&gt;</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## left join</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">left_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    surname nationality deceased                         title other.author</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey          US      yes     Exploratory Data Analysis         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables   Australia       no Modern Applied Statistics ...       Ripley</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney          US       no                     LISP-STAT         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley          UK       no            Spatial Statistics         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley          UK       no         Stochastic Simulation         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil   Australia       no     Interactive Data Analysis         &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Asimov          US      yes                          &lt;NA&gt;         &lt;NA&gt;</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## right join</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">right_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    surname nationality deceased                         title     other.author</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey          US      yes     Exploratory Data Analysis             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables   Australia       no Modern Applied Statistics ...           Ripley</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney          US       no                     LISP-STAT             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley          UK       no            Spatial Statistics             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley          UK       no         Stochastic Simulation             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil   Australia       no     Interactive Data Analysis             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   R Core        &lt;NA&gt;     &lt;NA&gt;          An Introduction to R Venables &amp; Smith</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## full join</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">full_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    surname nationality deceased                         title     other.author</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey          US      yes     Exploratory Data Analysis             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables   Australia       no Modern Applied Statistics ...           Ripley</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney          US       no                     LISP-STAT             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley          UK       no            Spatial Statistics             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Ripley          UK       no         Stochastic Simulation             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   McNeil   Australia       no     Interactive Data Analysis             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Asimov          US      yes                          &lt;NA&gt;             &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   R Core        &lt;NA&gt;     &lt;NA&gt;          An Introduction to R Venables &amp; Smith</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## semi join</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">semi_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    surname nationality deceased</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Tukey          US      yes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Venables   Australia       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Tierney          US       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Ripley          UK       no</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   McNeil   Australia       no</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## anti join #1</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span><span class="op">$</span><span class="fu">anti_join</span><span class="op">(</span><span class="va">books</span>, by.x <span class="op">=</span> <span class="st">"surname"</span>, by.y <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   surname nationality deceased</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Asimov          US      yes</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## anti join #2</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">books</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp2</span><span class="op">$</span><span class="fu">anti_join</span><span class="op">(</span><span class="va">authors</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     name                title     other.author</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 R Core An Introduction to R Venables &amp; Smith</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## with two m61r objects</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">books</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">authors</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp3</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">anti_join</a></span><span class="op">(</span><span class="va">tmp1</span>,<span class="va">tmp2</span>, by.x <span class="op">=</span> <span class="st">"name"</span>, by.y <span class="op">=</span> <span class="st">"surname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp3</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     name                title     other.author</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 R Core An Introduction to R Venables &amp; Smith</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

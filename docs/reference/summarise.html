@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -81,24 +81,39 @@ Each row corresponds to processed expressions determined in <code>...</code> for
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
-<span>  <span class="fu">summarise_</span><span class="op">(</span><span class="va">CO2</span>,a<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span>,b<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">g_info</span> <span class="op">&lt;-</span> <span class="fu">get_group_indices_</span><span class="op">(</span><span class="va">CO2</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Type</span>, <span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">summarise_</span><span class="op">(</span><span class="va">CO2</span>, group_info<span class="op">=</span><span class="va">g_info</span>,mean<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span>,sd<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">tmp</span></span>
-<span></span>
-<span>  <span class="co"># with m61r class</span></span>
-<span>  <span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># summarise</span></span>
-<span>  <span class="va">co2</span><span class="op">$</span><span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span>,sd<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">co2</span></span>
-<span>  </span>
-<span>  <span class="va">co2</span> <span class="op">=</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">CO2</span><span class="op">)</span></span>
-<span>  <span class="va">co2</span><span class="op">$</span><span class="fu">group_by</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">Type</span>,<span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">co2</span><span class="op">$</span><span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span>,sd<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">co2</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu">summarise_</span><span class="op">(</span><span class="va">CO2</span>,a<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span>,b<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         a        b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27.2131 10.81441</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">g_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="group.html">get_group_indices_</a></span><span class="op">(</span><span class="va">CO2</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Type</span>, <span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">summarise_</span><span class="op">(</span><span class="va">CO2</span>, group_info<span class="op">=</span><span class="va">g_info</span>,mean<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span>,sd<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Type  Treatment     mean       sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      Quebec nonchilled 35.33333 9.596371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Mississippi nonchilled 25.95238 7.402136</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Quebec    chilled 31.75238 9.644823</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Mississippi    chilled 15.81429 4.058976</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># with m61r class</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># summarise</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span><span class="op">$</span><span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span>,sd<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mean       sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27.2131 10.81441</span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="va">co2</span> <span class="op">=</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">CO2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span><span class="op">$</span><span class="fu">group_by</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">Type</span>,<span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span><span class="op">$</span><span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span>,sd<span class="op">=</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Type  Treatment     mean       sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      Quebec nonchilled 35.33333 9.596371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Mississippi nonchilled 25.95238 7.402136</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Quebec    chilled 31.75238 9.644823</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Mississippi    chilled 15.81429 4.058976</span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

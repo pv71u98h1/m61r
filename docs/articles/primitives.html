@@ -62,7 +62,7 @@
       <h1>m61r Primitives Written in Base R</h1>
                         <h4 data-toc-skip class="author">pv71u98h1</h4>
             
-            <h4 data-toc-skip class="date">2026-01-08</h4>
+            <h4 data-toc-skip class="date">2026-01-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pv71u98h1/m61r/blob/HEAD/vignettes/primitives.Rmd" class="external-link"><code>vignettes/primitives.Rmd</code></a></small>
       <div class="d-none name"><code>primitives.Rmd</code></div>
@@ -123,7 +123,7 @@
 <span><span class="co">## 1 27.2131 10.81441</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Grouped summary</span></span>
-<span><span class="va">g_info</span> <span class="op">&lt;-</span> <span class="fu">get_group_indices_</span><span class="op">(</span><span class="va">CO2</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Type</span>, <span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">g_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group.html">get_group_indices_</a></span><span class="op">(</span><span class="va">CO2</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Type</span>, <span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/summarise.html">summarise_</a></span><span class="op">(</span><span class="va">CO2</span>, group_info <span class="op">=</span> <span class="va">g_info</span>, mean <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          Type  Treatment     mean</span></span>
 <span><span class="co">## 1      Quebec nonchilled 35.33333</span></span>

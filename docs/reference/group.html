@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -69,18 +69,41 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
-<span><span class="co"># Grouping with a Base R function: Group by the 'year' of a column 'Date'</span></span>
-<span><span class="va">df_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"month"</span>, length.out <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span>
-<span>  Value <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">12</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Usage within the m61r pipeline:</span></span>
-<span><span class="va">df_date_m61r</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span><span class="va">df_date</span><span class="op">)</span></span>
-<span><span class="va">df_date_m61r</span><span class="op">$</span><span class="fu">group_by</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">Date</span>, <span class="st">"%Y"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">df_date_m61r</span><span class="op">$</span><span class="fu">summarise</span><span class="op">(</span>mean_val <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Value</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">df_date_m61r</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">g_info</span> <span class="op">&lt;-</span> <span class="fu">get_group_indices_</span><span class="op">(</span><span class="va">CO2</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Type</span>, <span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="summarise.html">summarise_</a></span><span class="op">(</span><span class="va">CO2</span>, group_info <span class="op">=</span> <span class="va">g_info</span>, mean <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">uptake</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Type  Treatment     mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      Quebec nonchilled 35.33333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Mississippi nonchilled 25.95238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Quebec    chilled 31.75238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Mississippi    chilled 15.81429</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Grouping with a Base R function: Group by the 'year' of a column 'Date'</span></span></span>
+<span class="r-in"><span><span class="va">df_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  Date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2020-01-01"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"month"</span>, length.out <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  Value <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">12</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Usage within the m61r pipeline:</span></span></span>
+<span class="r-in"><span><span class="va">df_date_m61r</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span><span class="va">df_date</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df_date_m61r</span><span class="op">$</span><span class="fu">group_by</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">Date</span>, <span class="st">"%Y"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df_date_m61r</span><span class="op">$</span><span class="fu">summarise</span><span class="op">(</span>mean_val <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Value</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df_date_m61r</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Date mean_val</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  2020-01-01        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2020-02-01        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  2020-03-01        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2020-04-01        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  2020-05-01        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  2020-06-01        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  2020-07-01        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  2020-08-01        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  2020-09-01        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 2020-10-01       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 2020-11-01       11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2020-12-01       12</span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

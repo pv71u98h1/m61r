@@ -15,13 +15,13 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/m61r.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/primitives.html">dplyr-and-tidyr-like Functions Written in Base R</a></li>
+    <li><a class="dropdown-item" href="../articles/m61r_object.html">The m61r Object</a></li>
+    <li><a class="dropdown-item" href="../articles/primitives.html">m61r Primitives Written in Base R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/m61r_advanced.html">Advanced Data Manipulation with m61r in Pure Base R</a></li>
@@ -73,34 +73,403 @@ Properties:</p><ul><li><p>Only columns following the condtion determined by</p><
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
-<span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">select_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="va">Type</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">select_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Plant</span>,<span class="va">Type</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">select_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="op">-</span><span class="va">Type</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">select_</span><span class="op">(</span><span class="va">CO2</span>,variable<span class="op">=</span><span class="op">~</span><span class="op">-</span><span class="op">(</span><span class="va">Plant</span><span class="op">:</span><span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># with m611r class</span></span>
-<span>  <span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu">m61r</span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">co2</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">~</span><span class="va">Type</span><span class="op">)</span></span>
-<span>  <span class="va">co2</span></span>
-<span></span>
-<span>  <span class="va">co2</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Plant</span>,<span class="va">Type</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">co2</span></span>
-<span></span>
-<span>  <span class="va">co2</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">~</span><span class="op">-</span><span class="va">Type</span><span class="op">)</span></span>
-<span>  <span class="va">co2</span></span>
-<span></span>
-<span>  <span class="va">co2</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span>variable<span class="op">=</span><span class="op">~</span><span class="op">-</span><span class="op">(</span><span class="va">Plant</span><span class="op">:</span><span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">co2</span></span>
-<span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">select_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="va">Type</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Quebec</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">select_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Plant</span>,<span class="va">Type</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plant   Type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Qn1 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Qn1 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Qn1 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Qn1 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Qn1 Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Qn1 Quebec</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">select_</span><span class="op">(</span><span class="va">CO2</span>,<span class="op">~</span><span class="op">-</span><span class="va">Type</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Plant  Treatment conc uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Qn1 nonchilled   95   16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Qn1 nonchilled  175   30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Qn1 nonchilled  250   34.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Qn1 nonchilled  350   37.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Qn1 nonchilled  500   35.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Qn1 nonchilled  675   39.2</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">select_</span><span class="op">(</span><span class="va">CO2</span>,variable<span class="op">=</span><span class="op">~</span><span class="op">-</span><span class="op">(</span><span class="va">Plant</span><span class="op">:</span><span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   conc uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   95   16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  175   30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  250   34.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  350   37.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  500   35.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  675   39.2</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># with m611r class</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu"><a href="m61r_class.html">m61r</a></span><span class="op">(</span>df<span class="op">=</span><span class="va">CO2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">~</span><span class="va">Type</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84 Mississippi</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Plant</span>,<span class="va">Type</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Plant        Type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Qn1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Qn1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    Qn1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    Qn1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    Qn1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    Qn1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    Qn1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    Qn2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    Qn2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   Qn2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   Qn2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Qn2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13   Qn2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14   Qn2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   Qn3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   Qn3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17   Qn3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18   Qn3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19   Qn3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20   Qn3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   Qn3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   Qc1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   Qc1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   Qc1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25   Qc1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26   Qc1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27   Qc1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28   Qc1      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29   Qc2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30   Qc2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31   Qc2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32   Qc2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33   Qc2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34   Qc2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35   Qc2      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36   Qc3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37   Qc3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38   Qc3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39   Qc3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40   Qc3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41   Qc3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42   Qc3      Quebec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43   Mn1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44   Mn1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45   Mn1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46   Mn1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47   Mn1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48   Mn1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49   Mn1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50   Mn2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51   Mn2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52   Mn2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53   Mn2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54   Mn2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55   Mn2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56   Mn2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57   Mn3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58   Mn3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59   Mn3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60   Mn3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61   Mn3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62   Mn3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63   Mn3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64   Mc1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65   Mc1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66   Mc1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67   Mc1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68   Mc1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69   Mc1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70   Mc1 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71   Mc2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72   Mc2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73   Mc2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74   Mc2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75   Mc2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76   Mc2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77   Mc2 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78   Mc3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79   Mc3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80   Mc3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81   Mc3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82   Mc3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83   Mc3 Mississippi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84   Mc3 Mississippi</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span><span class="op">~</span><span class="op">-</span><span class="va">Type</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Plant  Treatment conc uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Qn1 nonchilled   95   16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Qn1 nonchilled  175   30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    Qn1 nonchilled  250   34.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    Qn1 nonchilled  350   37.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    Qn1 nonchilled  500   35.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    Qn1 nonchilled  675   39.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    Qn1 nonchilled 1000   39.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    Qn2 nonchilled   95   13.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    Qn2 nonchilled  175   27.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   Qn2 nonchilled  250   37.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   Qn2 nonchilled  350   41.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Qn2 nonchilled  500   40.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13   Qn2 nonchilled  675   41.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14   Qn2 nonchilled 1000   44.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   Qn3 nonchilled   95   16.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   Qn3 nonchilled  175   32.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17   Qn3 nonchilled  250   40.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18   Qn3 nonchilled  350   42.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19   Qn3 nonchilled  500   42.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20   Qn3 nonchilled  675   43.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21   Qn3 nonchilled 1000   45.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   Qc1    chilled   95   14.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   Qc1    chilled  175   24.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   Qc1    chilled  250   30.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25   Qc1    chilled  350   34.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26   Qc1    chilled  500   32.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27   Qc1    chilled  675   35.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28   Qc1    chilled 1000   38.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29   Qc2    chilled   95    9.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30   Qc2    chilled  175   27.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31   Qc2    chilled  250   35.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32   Qc2    chilled  350   38.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33   Qc2    chilled  500   38.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34   Qc2    chilled  675   37.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35   Qc2    chilled 1000   42.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36   Qc3    chilled   95   15.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37   Qc3    chilled  175   21.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38   Qc3    chilled  250   38.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39   Qc3    chilled  350   34.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40   Qc3    chilled  500   38.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41   Qc3    chilled  675   39.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42   Qc3    chilled 1000   41.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43   Mn1 nonchilled   95   10.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44   Mn1 nonchilled  175   19.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45   Mn1 nonchilled  250   26.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46   Mn1 nonchilled  350   30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47   Mn1 nonchilled  500   30.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48   Mn1 nonchilled  675   32.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49   Mn1 nonchilled 1000   35.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50   Mn2 nonchilled   95   12.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51   Mn2 nonchilled  175   22.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52   Mn2 nonchilled  250   30.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53   Mn2 nonchilled  350   31.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54   Mn2 nonchilled  500   32.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55   Mn2 nonchilled  675   31.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56   Mn2 nonchilled 1000   31.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57   Mn3 nonchilled   95   11.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58   Mn3 nonchilled  175   19.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59   Mn3 nonchilled  250   25.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60   Mn3 nonchilled  350   27.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61   Mn3 nonchilled  500   28.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62   Mn3 nonchilled  675   28.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63   Mn3 nonchilled 1000   27.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64   Mc1    chilled   95   10.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65   Mc1    chilled  175   14.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66   Mc1    chilled  250   18.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67   Mc1    chilled  350   18.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68   Mc1    chilled  500   19.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69   Mc1    chilled  675   22.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70   Mc1    chilled 1000   21.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71   Mc2    chilled   95    7.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72   Mc2    chilled  175   11.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73   Mc2    chilled  250   12.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74   Mc2    chilled  350   13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75   Mc2    chilled  500   12.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76   Mc2    chilled  675   13.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77   Mc2    chilled 1000   14.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78   Mc3    chilled   95   10.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79   Mc3    chilled  175   18.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80   Mc3    chilled  250   17.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81   Mc3    chilled  350   17.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82   Mc3    chilled  500   17.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83   Mc3    chilled  675   18.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84   Mc3    chilled 1000   19.9</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span><span class="op">$</span><span class="fu">select</span><span class="op">(</span>variable<span class="op">=</span><span class="op">~</span><span class="op">-</span><span class="op">(</span><span class="va">Plant</span><span class="op">:</span><span class="va">Treatment</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">co2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    conc uptake</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    95   16.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   175   30.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   250   34.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   350   37.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   500   35.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   675   39.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1000   39.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    95   13.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   175   27.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  250   37.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  350   41.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  500   40.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  675   41.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1000   44.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   95   16.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  175   32.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  250   40.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18  350   42.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  500   42.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20  675   43.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 1000   45.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22   95   14.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  175   24.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  250   30.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  350   34.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  500   32.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  675   35.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 1000   38.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29   95    9.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  175   27.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  250   35.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  350   38.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  500   38.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34  675   37.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35 1000   42.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36   95   15.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37  175   21.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38  250   38.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39  350   34.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40  500   38.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41  675   39.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42 1000   41.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43   95   10.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44  175   19.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45  250   26.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46  350   30.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47  500   30.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48  675   32.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49 1000   35.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50   95   12.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51  175   22.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52  250   30.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53  350   31.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54  500   32.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55  675   31.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56 1000   31.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57   95   11.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58  175   19.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59  250   25.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60  350   27.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61  500   28.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62  675   28.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63 1000   27.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64   95   10.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65  175   14.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66  250   18.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67  350   18.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68  500   19.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69  675   22.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70 1000   21.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71   95    7.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72  175   11.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73  250   12.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74  350   13.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75  500   12.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76  675   13.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77 1000   14.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78   95   10.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79  175   18.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80  250   17.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81  350   17.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82  500   17.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83  675   18.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84 1000   19.9</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
