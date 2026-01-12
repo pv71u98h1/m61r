@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \title{Join Two Data Frames Based on Nearest Key}
 \description{
-  Performs an "As-Of" join, matching rows from two data frames where the keys are close but not necessarily equal. This is the primary tool for time-series synchronization, mimicking Polars' \code{join_asof}.
+  Performs an "As-Of" join, matching rows from two data frames where the keys are close but not necessarily equal. This is the primary tool for time-series synchronization, mimicking `Polars` \code{join_asof}.
 }
 \usage{
 # Primitive function

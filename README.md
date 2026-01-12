@@ -10,7 +10,7 @@
 
 - **Zero Dependencies**: No `dplyr`, no `tidyverse`. It runs on any vanilla R installation.
 
-- **Unified Logic**: Treat tabular and timeseries as one.
+- **Unified Logic**: Treat tabular and time series as one.
 
 - **High Performance**: Optimized Base R verbs for tabular accounting.
 
@@ -99,7 +99,7 @@ print(results)
 
 **Unit: milliseconds**
 
-| expr | min | lq | mean | median | uq | max | neval |
+| `expr` | `min` | `lq` | `mean` | `median` | `uq` | `max` | `neval` |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | base_r | 37.79 | 42.08 | 49.75 | 44.39 | 59.48 | 92.38 | 50 |
 | **m61r_pipe** | 20.11 | 21.94 | 27.10 | **23.78** | 26.19 | 55.45 | 50 |
@@ -127,7 +127,7 @@ print(results_group)
 
 **Unit: milliseconds**
 
-| expr | min | lq | mean | median | uq | max | neval |
+| `expr` | `min` | `lq` | `mean` | `median` | `uq` | `max` | `neval` |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | base_aggregate | 329.80 | 350.84 | 361.70 | 354.05 | 372.74 | 442.04 | 20 |
 | **m61r_grouped** | 146.57 | 147.70 | 154.79 | **149.88** | 165.77 | 172.25 | 20 |
@@ -142,7 +142,7 @@ print(results_group)
 install.packages("m61r")
 ```
 
-## Installation from github in base R
+## Installation from GITHUB in Base R
 
 ```R
 setwd("~")

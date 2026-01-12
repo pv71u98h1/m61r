@@ -17,7 +17,7 @@
 \code{select_()} returns a data frame.
 Properties:
 \itemize{
-\item Only columns following the condtion determined by \item{variable} appear.
+\item Only columns following the condition determined by \item{variable} appear.
 \item Rows are not modified.
 }
 }

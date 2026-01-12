@@ -7,14 +7,14 @@
     * Introduced `.SD()` and `.select_cols()` for advanced column manipulation within the object's environment.
     * Added the `across()` function, allowing a function to be applied to multiple columns simultaneously within `mutate()` and `summarise()`.    
 * **Temporal Orchestration**:
-    * Added the `$explode()` method to unnest list-columns, typically used after creating temporal sequences.
+    * Added the `$explode()` method to `explode` list-columns, typically used after creating temporal sequences.
     * Added `$join_asof()` for proximity-based temporal joins (backward/forward), essential for asynchronous time-series.
 * **Conditional Logic**: Implemented `case_when_` to allow complex vectorised syntax within the `m61r` object.
 * **I/O**: Implemented `write.csv` to allow exporting data.frame from the `m61r` object.
 
 ### API Improvements
 
-* **summarise_**: Complete refacto of name management. Named expressions (e.g., `avg = ~mean(x)`) and list expressions (e.g., `~across(...)`) now correctly handle suffixes and prevent `NA` column names.
+* **summarise_**: Complete code refactoring of name management. Named expressions (e.g., `avg = ~mean(x)`) and list expressions (e.g., `~across(...)`) now correctly handle suffixes and prevent `NA` column names.
 * **mutate_**: Optimized internal evaluation for better memory management on large data frames.
 * **Joins**: Improved stability of join functions (`inner`, `left`, `right`, `full`, `semi`, `anti`) across mixed column types.
 

@@ -6,7 +6,7 @@
   Summarise of formulas on a data.frame.
 }
 \details{
-\code{summarise_} is the aggregation function. It expects the grouping information from \code{get_group_indices_}. When a formula expression (e.g., \code{~mean(uptake)}) is run, it is executed for each group subset, relying on Base R's \code{\link[base]{lapply}} over the pre-calculated group indices for performance. \strong{All expressions within \code{summarise_} must return an atomic vector of length 1 for each group.}
+\code{summarise_} is the aggregation function. It expects the grouping information from \code{get_group_indices_}. When a formula expression (e.g., \code{~mean(uptake)}) is run, it is executed for each group subset, relying on Base R \code{\link[base]{lapply}} over the pre-calculated group indices for performance. \strong{All expressions within \code{summarise_} must return an atomic vector of length 1 for each group.}
 }
 \usage{
 # summarise_(df, group_info = NULL, ...)

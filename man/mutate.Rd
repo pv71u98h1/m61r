@@ -2,9 +2,9 @@
 \alias{mutate_}
 \alias{transmutate_}
 \encoding{UTF-8}
-\title{Mutate and transmutate a data.frame}
+\title{Transformative selections of a data.frame}
 \description{
-  Mutate and transmutate a data.frame.
+  Transformative selections of a data.frame.
 }
 \details{
 \code{mutate_} and \code{transmutate_} execute expressions non-grouped. If the \code{m61r} object is in a grouped state (via \code{$group_by()}), that grouping state is ignored by the primitive functions, ensuring Base R speed for vectorised operations.
@@ -16,7 +16,7 @@
 \arguments{
 \item{df}{data.frame}
 
-\item{...}{formula used for mutating/transmutating the data.frame}
+\item{...}{formula used for transformative selections the data.frame}
 }
 \value{
 The functions return a data frame.

@@ -17,7 +17,7 @@
   This function provides a concise way to perform operations on multiple columns at once. It internally accesses the data subset (\code{.SD}) of the current group or data frame. If \code{cols} is a function, it acts as a filter to select all columns for which the function returns \code{TRUE}.
 }
 \value{
-  A list where each element represents the result of \code{FUN} applied to a selected column. When used within \code{summarise_}, this list is automatically unnested into separate columns.
+  A list where each element represents the result of \code{FUN} applied to a selected column. When used within \code{summarise_}, this list is automatically flattened into separate columns.
 }
 \examples{
 # Usage within an m61r pipeline for aggregation

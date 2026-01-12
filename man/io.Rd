@@ -4,7 +4,7 @@
 \encoding{UTF-8}
 \title{CSV Input and Output Utilities}
 \description{
-  High-performance wrappers for reading and writing CSV files. These functions utilize Base R's \code{read.table} and \code{write.table} engines while ensuring the resulting data frames are optimized for \code{m61r} pipelines.
+  High-performance wrappers for reading and writing CSV files. These functions utilize Base R \code{read.table} and \code{write.table} engines while ensuring the resulting data frames are optimized for \code{m61r} pipelines.
 }
 \usage{
 # read_csv(file, header = TRUE, sep = ",", stringsAsFactors = FALSE, ...)

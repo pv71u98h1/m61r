@@ -18,7 +18,7 @@ The function returns an object of the same type as \code{df}.
 Properties:
 \itemize{
 \item Columns are not modified.
-\item Only rows following the condtion determined by \item{subset} appear.
+\item Only rows following the condition determined by \item{subset} appear.
 \item Data frame attributes are preserved.
 }
 }

@@ -1,9 +1,9 @@
 \name{case_when}
 \alias{case_when}
 \encoding{UTF-8}
-\title{Logic whithin a dataframe}
+\title{Logic within a dataframe}
 \description{
-  The \code{case_when} function provides a vectorized approach to multiple \code{if_else} conditions in a readable and performant way. It evaluates conditions sequentially and assigns values as soon as a condition is satisfied.
+  The \code{case_when} function provides a vectorised approach to multiple \code{if_else} conditions in a readable and efficient way. It evaluates conditions sequentially and assigns values as soon as a condition is satisfied.
 }
 \usage{
 # case_when(...)
@@ -13,7 +13,7 @@
   Format: \code{condition1, value1, condition2, value2, ..., default}.}
 }
 \details{
-  This function is optimized for use within \code{mutate_} or \code{transmutate_} methods.   
+  This function is optimized for use inside \code{mutate_} or \code{transmutate_} methods.   
   The final argument acts as the fallback value (the "otherwise" branch) if all preceding conditions evaluate to \code{FALSE}.
 }
 \value{
@@ -28,7 +28,7 @@ res <- case_when(
   "Large" # Default/Otherwise value
 )
 
-# Usage within an m61r pipeline
+# Usage with an m61r pipeline
 tmp <- m61r(mtcars)
 tmp$mutate(
   efficiency_cat = ~case_when(

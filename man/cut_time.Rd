@@ -10,7 +10,7 @@
 }
 \arguments{
   \item{var}{The symbol of the date or time column (e.g., \code{timestamp}).}
-  \item{breaks_str}{A character string specifying the time interval (e.g., \code{"hour"}, \code{"day"}, \code{"week"}, \code{"month"}). This is passed directly to the \code{breaks} argument of Base R's \code{cut} function.}
+  \item{breaks_str}{A character string specifying the time interval (e.g., \code{"hour"}, \code{"day"}, \code{"week"}, \code{"month"}). This is passed directly to the \code{breaks} argument of Base R \code{cut} function.}
 }
 \details{
   This function uses \code{substitute} to create a symbolic call to \code{base::cut}. When used inside an \code{m61r} pipeline, it allows for high-performance temporal bucketing.

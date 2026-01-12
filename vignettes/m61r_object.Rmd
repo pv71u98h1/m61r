@@ -56,7 +56,7 @@ class(tmp)
 
 # Example 3: Manipulation of an m61r Object
 
-The `m61r` object mimics several data frame behaviors, such as `names()`, `dim()`, and standard subsetting.
+The `m61r` object mimics several data frame behaviours, such as `names()`, `dim()`, and standard subsetting.
 
 ```{r edit3}
 co2 <- m61r(CO2)

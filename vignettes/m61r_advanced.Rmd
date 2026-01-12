@@ -69,7 +69,7 @@ p$mutate(~lapply(.SD(), as.numeric))
 
 ```
 
-## Pattern Matching with Grep
+## Pattern Matching with `Grep`
 
 Use `grep` to apply transformations to columns matching specific naming patterns.
 

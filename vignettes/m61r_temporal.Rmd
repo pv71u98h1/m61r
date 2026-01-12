@@ -23,9 +23,9 @@ In `m61r`, temporal operations rely on R primitives executed inside `mutate()` a
 
 | Operation | Base R Expression (`m61r`) |
 | --- | --- |
-| Cast to Date | `~as.Date(col)` |
-| Cast to Datetime | `~as.POSIXct(col)` |
-| Datetime Sequence | `~seq(from, to, by="1 day")` |
+| Cast to `Date` | `~as.Date(col)` |
+| Cast to `Datetime` | `~as.POSIXct(col)` |
+| `Datetime Sequence` | `~seq(from, to, by="1 day")` |
 | Extract Hour | `~as.POSIXlt(col)$hour` |
 
 # Formatting and Component Extraction
@@ -60,7 +60,7 @@ data$mutate(
 
 # Interval Expansion
 
-When having a "start" and an "end" time, a powerful way to analyze the data is to "explode" the intervals into individual rows.
+When having a "start" and an "end" time, a powerful way to analyse the data is to "explode" the intervals into individual rows.
 
 ## 1. Creating Sequences
 
@@ -79,7 +79,7 @@ p$mutate(slot = ~Map(function(s, e) seq(s, e, by = "hour"), start, end))
 
 ## 2. Structural Explosion
 
-The `explode` method unnests the list-column, duplicating other column values for each element in the sequence.
+The `explode` method flattens the list-column, duplicating other column values for each element in the sequence.
 
 ```{r step2}
 p$explode("slot")

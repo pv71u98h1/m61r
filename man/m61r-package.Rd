@@ -15,12 +15,12 @@ The core of \code{m61r} is the Base R Data Manipulation Grammar, implemented thr
 \item \strong{\code{m61r} Object (\code{m61r()} constructor):} This S3 class provides a pipeline interface, allowing a sequence of operations (e.g., \code{$filter()}, \code{$mutate()}) to be chained cleanly. 
 }
 
-\strong{The Base R Formula DSL:}
-All manipulation functions (like \code{filter}, \code{mutate}, \code{group_by}, \code{select}, \code{summarise}) utilise a formula syntax (\code{~<expression>}). This ensures Non-Standard Evaluation (NSE) can access column names directly within the context of the data frame.
+\strong{The Base R Formula Domain-Specific Language:}
+All manipulation functions (like \code{filter}, \code{mutate}, \code{group_by}, \code{select}, \code{summarise}) utilise a formula syntax (\code{~<expression>}). This ensures Non-Standard Evaluation can access column names directly within the context of the data frame.
 
 \strong{Date and Time Handling:}
 For complex grouping or filtering on date-time columns (\code{Date} or \code{POSIXct}), users must employ standard Base R functions within the formula expression to extract components.
-For instance, to group by the year of a column named \code{DateColumn}, one must use Base R's \code{format} function: \code{~format(DateColumn, "\%Y")}
+For instance, to group by the year of a column named \code{DateColumn}, one must use Base R \code{format} function: \code{~format(DateColumn, "\%Y")}
 
 For detailed documentation, see the individual function reference pages.
 }

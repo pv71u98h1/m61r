@@ -38,7 +38,7 @@ head(tmp, 2)
 
 ```
 
-# mutate / transmutate
+# Transformative selections of a data.frame
 
 `mutate_` adds new variables while preserving existing ones, whereas `transmutate_` keeps only the newly created variables.
 
@@ -84,7 +84,7 @@ inner_join_(authors, books, by.x = "surname", by.y = "name")
 
 # reshape
 
-The `gather_` function transforms data from a "wide" format to a "long" format, making it easier to analyze certain types of data.
+The `gather_` function transforms data from a "wide" format to a "long" format, making it easier to analyse certain types of data.
 
 ```{r reshape_eg}
 df3 <- data.frame(id = 1:2, age = c(40, 50), dose.a1 = c(1, 2), dose.a2 = c(2, 1))

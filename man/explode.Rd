@@ -1,16 +1,16 @@
 \name{explode}
 \alias{explode}
 \encoding{UTF-8}
-\title{Unnesting a List-column }
+\title{Flattening a List-column }
 \description{
-  The \code{explode} method unnests a list-column, creating a new row for every element in the list while duplicating the values of all other columns.
+  The \code{explode} method flattens a list-column, creating a new row for every element in the list while duplicating the values of all other columns.
 }
 \usage{
 # Within an m61r object
 # tmp$explode(column)
 }
 \arguments{
-  \item{column}{A character string specifying the name of the list-column to be unnested.}
+  \item{column}{A character string specifying the name of the list-column to be flattened.}
 }
 \details{
   This operation is particularly useful after creating temporal sequences or ranges using \code{Map()} or \code{seq()}. It transforms "nested" data into a "long" format suitable for standard aggregations. 

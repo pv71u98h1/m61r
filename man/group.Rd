@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \title{Determine Grouping Structure for a data.frame}
 \description{
-\code{get_group_indices_} calculates the necessary indices and keys for efficient grouped operations (like \code{summarise_}). This mechanism uses Base R's \code{\link[base]{interaction}} for group factor calculation.
+\code{get_group_indices_} calculates the necessary indices and keys for efficient grouped operations (like \code{summarise_}). This mechanism uses Base R \code{\link[base]{interaction}} for group factor calculation.
 }
 \usage{
 # get_group_indices_(df, group = NULL)

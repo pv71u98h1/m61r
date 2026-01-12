@@ -69,8 +69,8 @@ In addition,
 \item \code{names.m61r} provides the names of the column of the internal \code{data.frame} embedded to the object \code{m61r}.
 \item \code{dim.m61r} provides the dimensions of the internal \code{data.frame} embedded to the object \code{m61r}.
 \item \code{as.data.frame.m61r} extracts the internal \code{data.frame} embedded to the object \code{m61r}.
-\item \code{cbind.m61r} combines by _c_olumns two objects \code{m61r}.
-\item \code{rbind.m61r} combines by _r_ows two objects \code{m61r}.
+\item \code{cbind.m61r} combines by columns two objects \code{m61r}.
+\item \code{rbind.m61r} combines by rows two objects \code{m61r}.
 \item \code{left_join}, \code{anti_join}, \code{full_join}, \code{inner_join}, \code{right_join}, \code{semi_join} join two objects \code{m61r}.
 }
 

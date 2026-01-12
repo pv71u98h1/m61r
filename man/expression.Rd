@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \title{Evaluate Formula Expressions on Data Subsets}
 \description{
-The core engine for Non-Standard Evaluation (NSE) within \code{m61r}. \code{expression_} evaluates a user-provided formula within the context of a data frame, optionally for pre-calculated groups.
+The core engine for Non-Standard Evaluation within \code{m61r}. \code{expression_} evaluates a user-provided formula within the context of a data frame, optionally for calculated groups.
 The result relies on the Base R functions \code{\link[base]{with}} and \code{\link[base]{eval}}.
 }
 \usage{
