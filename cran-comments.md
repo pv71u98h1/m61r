@@ -3,13 +3,16 @@
 * win-builder (devel and release)
 
 ## R CMD check results
-
 0 errors | 0 warnings | 1 note
 
 * checking for future file timestamps ... NOTE
-  unable to verify current time
-  
-  This note is environment-specific and is not related to the package source code.
+  unable to verify current time. This note is environment-specific 
+  (local) and is not related to the package source code.
+
+* checking CRAN incoming feasibility ... NOTE
+  Possibly misspelled words in DESCRIPTION: composable.
+  "Composable" is a technical term used here to describe the 
+  functional API of the package and its usage is intentional.
 
 ## Submission summary
 This is an update for the 'm61r' package (version 0.1.0). 
