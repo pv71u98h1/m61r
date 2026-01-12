@@ -5,7 +5,7 @@ Authors@R: c(person("Jean-Marie","Lepioufle", , "pv71u98h1@gmail.com", c("aut","
 Title: Package About Data Manipulation in Pure Base R
 Description: A lightweight, dependency-free data engine for R that provides 
     a grammar for tabular and time-series manipulation. Built entirely on 
-    Base R, 'm61r' offers a fluent, chainable API inspired by modern data 
+    Base R, 'm61r' offers a fluent, composable API inspired by modern data 
     tools while prioritizing memory efficiency and speed. It includes 
     optimized versions of common data verbs such as filtering, mutation, 
     grouped aggregation, and approximate temporal joins, making it an 
